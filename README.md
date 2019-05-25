@@ -1,4 +1,4 @@
-![Build status](https://travis-ci.org/joufa/studious-palm-tree.svg?branch=master)
+![Build status](https://travis-ci.org/joufa/studious-palm-tree.svg?branch=master) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=joufa_studious-palm-tree&metric=alert_status)](https://sonarcloud.io/dashboard?id=joufa_studious-palm-tree)
 
 # Studious Palm Tree
 
