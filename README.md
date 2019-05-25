@@ -4,7 +4,7 @@ A self-assessment tool for teams and organizations. The project is created for d
 and experimenting with following tools and techiqiues:
 
   * GitHub CI and CD tools
-  * Clean architechture
+  * Clean architecture
   * Code quality measuring and automated testing
 
 ## Getting started
