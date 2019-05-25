@@ -1,10 +1,12 @@
+![Build status](https://travis-ci.org/joufa/studious-palm-tree.svg?branch=master)
+
 # Studious Palm Tree
 
 A self-assessment tool for teams and organizations. The project is created for demo purposes
 and experimenting with following tools and techiqiues:
 
   * GitHub CI and CD tools
-  * Clean architechture
+  * Clean architecture
   * Code quality measuring and automated testing
 
 ## Getting started

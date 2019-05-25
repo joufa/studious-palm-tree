@@ -1,10 +1,9 @@
 package fi.joufa.agilesurvey.domain;
 
+import java.util.Set;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table
