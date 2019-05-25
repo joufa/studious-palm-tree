@@ -1,13 +1,12 @@
 package fi.joufa.agilesurvey.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter

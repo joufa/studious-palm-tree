@@ -1,23 +1,24 @@
 package fi.joufa.agile.repository;
 
+import static org.junit.Assert.*;
+
 import fi.joufa.agilesurvey.AgileApplication;
 import fi.joufa.agilesurvey.domain.Team;
 import fi.joufa.agilesurvey.repository.TeamRepository;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = AgileApplication.class)
+@ActiveProfiles("development")
 public class TeamRepositoryIT {
 
   @Autowired
