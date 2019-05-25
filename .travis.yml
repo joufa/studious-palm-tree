@@ -8,13 +8,13 @@ cache:
 
 addons:
   sonarcloud:
-    organization: "joufa-github"
+    organization: joufa-github
     token:
-      secure: "hro5tbPdICoO3KNVoBz+gwEXNvoDcd7ehV2JHbdRLwtLjhsSEQMwbulAncRANnojPaH8NZwvN4NNEsjCR35B5v3Ps4oZ1Y8rEAOB33EnPbSsqHmLPABLNlclqYv5iI54Vac7+FGRoNwm7UYw3WTSo5v6IAiRPab8GT5eFOr8tXfNv2bPX8NPQQpjTfKWu7bv5gO7UAqvBco2OJOrNc1IvWfakLwmZ0gv5uXK0GSbWiXWFQWF/9hCRgadQh3DnVwgpLFO8itmXZfhR7sBf1wkqFptfo88qRpSHMAXbHwp3Ek5rR4RfTpYuzIrjyvgkvi2zSc99WR0yuHvHa1ZiTMesiDLztSR3F36Hmj1RDl1atkqjy/5a9QESbSyeYLSGUaOtcMbILNM5Tx76hU69TE+yerRxqj/ALKvNMTHzSXJV7U5lnJgyC77L9YabveBYzZL4XSC3HiHNHhlz5V8Ou73ZTVcScC+7l0MxsTD3jytlHj37Sve6LN2iy9TdC938M/zt/ILP9cFcWYgy7tQDyQuuZYlow7ACoU9/oUau454YtEky+rOIdwsl2a7GeO+rtqo30YHl/2MRZisV49gJUaN+0xpVrGpDI2C5riUyHCpfG7EBfmLjq64AYZiL/eIDHkarw/EoEvqyUup1avCW8LC5EoFLVxbah8jojenNiBYk6k="
-
+      secure: "0LlCsTw3sPmUxG7RHYQ+qko9I+fzsckXp4AL5KlgoHNCeLGBvujhYHAffyUyQ4LlCDA2Gbidv1eN1HD00gklNP1zumQyqa6g3Wubov4VHPwUcF2gG+zNv4BJKC/flJ553FsYqit4Z5Xbd88py055P6osHu/4HSQ3RhMvOsnBemBspqjKSgfMoi9LGVUXI6zMNfRJgsITuv0JfQ/z+6G8ZOWhWlhpwuIf8QmKqKBBXfigKN+l3hWlwjd89IrO4y++UbE6cgUbiso+Y4vdb9O7qUC5I4bbD+CGrU7Eg6Wl/NyhvwNvR+K/Llt2SvvGfyPeITjWNyuUo+l2lTpV0Aoi5H9v0rhuDsp9SnqYjuYsaPxJmQPsiMqzcRsjCiejL1SLsJ6qyN4g45lNxA04H5AbOPcVKzPEaq0Q9hwAiLouDBQvJtA+V90FyzHcVw8yoFDYxOdu4G5IBZDthpOf19z9qKB9G0WhQMP/P36Q/uJY7hxEsn7BgZmmQ0LN+ZN0lltN9Xxg6EVg9tfW/WFMtvP2F+WkwopTh65jX+LzuFPNC+IwyQviAvyIUbYfVHIBFsIW4VZV9yGz8/cD84Nq6x4Af6dCkrbeoyJsgcfnZ0zwIgJUAX/NHWiiEEQNmQ2YmlzGf6CF/i4mEgQx2OUdbo0KhsmKJkCdX6tpK4WTl7ji7ac="
 jobs:
   include:
-    - stage: Integration tests
+    - stage: Tests
+      name: Integration tests
       script: "./mvnw integration-test -P integration-tests"
     - stage: Coverage
       script: "./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar"
