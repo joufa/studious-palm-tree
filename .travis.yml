@@ -1,1 +1,9 @@
 language: java
+jdk: oraclejdk8
+
+jobs:
+  include:
+    - stage: Unit Tests
+      script: ./mvnw test -P development
+    - stage: Integration Tests
+      script: ./mvnw integration-test -P integration-tests
