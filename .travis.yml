@@ -1,15 +1,20 @@
 sudo: false
-
 language: java
 jdk: oraclejdk8
-
 cache:
   directories:
-    - $HOME/.m2
+  - "$HOME/.m2"
+
+
+addons:
+  sonarcloud:
+    organization: "joufa-github"
+    token:
+      secure: "hro5tbPdICoO3KNVoBz+gwEXNvoDcd7ehV2JHbdRLwtLjhsSEQMwbulAncRANnojPaH8NZwvN4NNEsjCR35B5v3Ps4oZ1Y8rEAOB33EnPbSsqHmLPABLNlclqYv5iI54Vac7+FGRoNwm7UYw3WTSo5v6IAiRPab8GT5eFOr8tXfNv2bPX8NPQQpjTfKWu7bv5gO7UAqvBco2OJOrNc1IvWfakLwmZ0gv5uXK0GSbWiXWFQWF/9hCRgadQh3DnVwgpLFO8itmXZfhR7sBf1wkqFptfo88qRpSHMAXbHwp3Ek5rR4RfTpYuzIrjyvgkvi2zSc99WR0yuHvHa1ZiTMesiDLztSR3F36Hmj1RDl1atkqjy/5a9QESbSyeYLSGUaOtcMbILNM5Tx76hU69TE+yerRxqj/ALKvNMTHzSXJV7U5lnJgyC77L9YabveBYzZL4XSC3HiHNHhlz5V8Ou73ZTVcScC+7l0MxsTD3jytlHj37Sve6LN2iy9TdC938M/zt/ILP9cFcWYgy7tQDyQuuZYlow7ACoU9/oUau454YtEky+rOIdwsl2a7GeO+rtqo30YHl/2MRZisV49gJUaN+0xpVrGpDI2C5riUyHCpfG7EBfmLjq64AYZiL/eIDHkarw/EoEvqyUup1avCW8LC5EoFLVxbah8jojenNiBYk6k="
 
 jobs:
   include:
-    - stage: Unit Tests
-      script: ./mvnw test -P development
-    - stage: Integration Tests
-      script: ./mvnw integration-test -P integration-tests
+    - stage: Testing
+      script: "./mvnw test -P development && ,/mvnw integration-test -P integration-tests"
+    - stage: Coverage
+      script: "./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Dmaven.test.failure.ignore=false"
