@@ -19,5 +19,5 @@ jobs:
 
 stages:
   - QA
-  - Deploy
-    if: (branch = master)
+  - name: Deploy
+    if: branch = master
