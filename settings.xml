@@ -6,4 +6,7 @@
     <activeProfiles>
         <activeProfile>production</activeProfile>
     </activeProfiles>
+    <pluginGroups>
+        <pluginGroup>com.heroku.sdk</pluginGroup>
+    </pluginGroups>
 </settings>
