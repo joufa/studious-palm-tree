@@ -67,6 +67,13 @@
                 <skip.integration.tests>false</skip.integration.tests>
                 <skip.unit.tests>true</skip.unit.tests>
             </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>production</id>
@@ -206,6 +213,7 @@
                 <configuration>
                     <skipITs>${skip.integration.tests}</skipITs>
                 </configuration>
+
 
             </plugin>
             <plugin>
