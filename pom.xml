@@ -11,13 +11,14 @@
     <groupId>fi.joufa</groupId>
     <artifactId>agilesurvey</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Agile Survey Tool</name>
+    <name>Agile self-assessment tool</name>
     <description>A Simple tool for collecting and presenting survey data</description>
 
     <properties>
         <java.version>1.8</java.version>
         <skip.unit.tests>false</skip.unit.tests>
         <skip.integration.tests>true</skip.integration.tests>
+        <heroku.app.name>agileselfassesment</heroku.app.name>
     </properties>
 
     <dependencies>
@@ -139,6 +140,16 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <groupId>com.heroku.sdk</groupId>
+                        <artifactId>heroku-maven-plugin</artifactId>
+                        <configuration>
+                            <appName>${heroku.app.name}</appName>
+                            <processTypes>
+                                <web>java $JAVA_OPTS -cp target/classes:target/dependency/* fi.joufa.agilesurvey.AgileApplication</web>
+                            </processTypes>
+                        </configuration>
+                    </plugin>
                 </plugins>
             </build>
 
@@ -174,6 +185,7 @@
                         </executions>
                     </plugin>
                 </plugins>
+
             </build>
         </profile>
     </profiles>

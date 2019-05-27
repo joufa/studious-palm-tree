@@ -5,7 +5,6 @@ cache:
   directories:
   - "$HOME/.m2"
 
-
 addons:
   sonarcloud:
     organization: joufa-github
@@ -13,8 +12,12 @@ addons:
       secure: "jGuHHxa+lepgjhAcqFJvOxmEoQW/45re0M99F3T/8SzrsAIeu+jN+vkzvWmlFLEv9VjWZUdADtat1OAqmGX8jejPrdgHXW7cb/dUkb2myjQ/VFdI42BJ+8NoSjZp5y8eGf51w71lCrZ9kUOK2Ycm+w1ZwS+Pmuk7vYviYOdgebN2B5kkZBqMbyM0RTxPd+6cHUh0ylRElElBnLpIMslEmyJNLsI8bRfdEgGRQrMP/6XcpaV84r9dYm0rRCkOCYyFYeYmkLIU1Bb0ZrUREObR3S+bGRZfYemf8GxzscCQ0uUny1xYnsq294no70bNbVWlVbUIcc6YUiqL6bifPT8/IO78fTAaRrDPGrv+q6rRQBjRe1jCjEu4dE/SK6xccDwFH098HldKJV8kDT0gnEqyuI8tclTbPDtuejKZItgD2cc5cW76amE3TxTGqI/ZhBTaDvqz8m6OIwGsSsjzAPUa3fGQAwKKF6t8fcTd5d1+WJpqyc74GgcevnUA5v0EfibDfl8Nd0a+7SaflP9Tqt7Kx0Y8ox1RtfYfTgEBMqa33fNkwimL4785frQpLClgqt7F/G9WACi8zlM+8RhQHg3oj9QPMQz2iXL//LCYXqsrn8U5oDcxl3KZNr/67gmwO52sPt66zP6Xd6EU/sBXgocCrgIygbDQU/Jat5l5KB/bDmA="
 jobs:
   include:
-    - stage: Tests
-      name: Integration tests
-      script: "./mvnw integration-test -P integration-tests"
-    - stage: Coverage
-      script: "./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar"
+    - stage: QA
+      script: "./mvnw integration-test -P integration-tests && ./mvnw clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar"
+    - stage: Deploy
+      script: "./mvnw clean install -P production && ./mvnw heroku:deploy"
+
+stages:
+  - QA
+  - Deploy
+    if: (branch = master)
