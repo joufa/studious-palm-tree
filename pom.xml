@@ -154,7 +154,9 @@
                         <configuration>
                             <appName>${heroku.app.name}</appName>
                             <processTypes>
-                                <web>java $JAVA_OPTS -cp target/classes:target/dependency/* fi.joufa.agilesurvey.AgileApplication</web>
+                                <web>java $JAVA_OPTS -cp target/classes:target/dependency/*
+                                    fi.joufa.agilesurvey.AgileApplication
+                                </web>
                             </processTypes>
                         </configuration>
                     </plugin>
@@ -169,22 +171,26 @@
                 <skip.integration.tests>false</skip.integration.tests>
                 <skip.unit.tests>false</skip.unit.tests>
             </properties>
+            <dependencies>
+
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
+
+            </dependencies>
             <build>
-                <!--
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.jacoco</groupId>
-                            <artifactId>jacoco-maven-plugin</artifactId>
-                            <version>0.8.3</version>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-                -->
                 <plugins>
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.8.3</version>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/*AgileApplication.*</exclude>
+                            </excludes>
+                        </configuration>
                         <executions>
                             <execution>
                                 <goals>
@@ -257,12 +263,12 @@
                 <artifactId>maven-clean-plugin</artifactId>
                 <configuration>
                     <filesets>
-                    <fileset>
-                    <directory>${project.basedir}/src/main/resources/static</directory>
-                    <includes>
-                        <include>**/*.*</include>
-                    </includes>
-                    </fileset>
+                        <fileset>
+                            <directory>${project.basedir}/src/main/resources/static</directory>
+                            <includes>
+                                <include>**/*.*</include>
+                            </includes>
+                        </fileset>
                     </filesets>
                 </configuration>
             </plugin>
