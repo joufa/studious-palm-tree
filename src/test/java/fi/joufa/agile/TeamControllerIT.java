@@ -1,58 +1,57 @@
 package fi.joufa.agile;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.Assert.assertEquals;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.joufa.agilesurvey.AgileApplication;
-import fi.joufa.agilesurvey.TeamController;
 import fi.joufa.agilesurvey.domain.Team;
-import fi.joufa.agilesurvey.repository.TeamRepository;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(TeamController.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("development")
 @ContextConfiguration(classes = AgileApplication.class)
 public class TeamControllerIT {
 
-  @Autowired
-  @SuppressWarnings("unused")
-  private MockMvc mockMvc;
+  @LocalServerPort private int port;
 
-  @MockBean
-  @SuppressWarnings("unused")
-  private TeamRepository teamRepository;
+  private ObjectMapper objectMapper = new ObjectMapper();
+
+  TestRestTemplate restTemplate = new TestRestTemplate();
+
+  HttpHeaders headers = new HttpHeaders();
 
   @Test
-  public void findTeams() throws Exception {
+  public void GET_ApiTeams_shouldReturnListOfTeams() throws Exception {
+    HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 
-    given(teamRepository.findAll()).willReturn(createMockTeams());
+    ResponseEntity<String> response =
+        restTemplate.exchange(
+            createURLWithPort("/api/teams"), HttpMethod.GET, entity, String.class);
 
-    mockMvc
-        .perform(get("/teams").contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk());
+    List<Team> expected = objectMapper.readValue(response.getBody(), List.class);
+
+    assertEquals(4, expected.size());
   }
 
-  private List<Team> createMockTeams() {
-    final List<Team> teams = new ArrayList<>();
-    Team team = new Team();
-    team.setName("Kissalan pojat");
-    team.setId(Long.valueOf(1));
-    team.setCreated(new Date());
-    teams.add(team);
-    return teams;
+  @Test
+  public void POST_ApiTeams_shouldCreateNewTeam() throws Exception {
+    final Team teamToPost = new Team();
+    teamToPost.setName("Testitiimi");
+    final String JSON = objectMapper.writeValueAsString(teamToPost);
+    System.out.println(JSON);
+  }
+
+  private String createURLWithPort(String uri) {
+    return "http://localhost:" + port + uri;
   }
 }
