@@ -20,6 +20,6 @@ public class Team extends BaseEntity {
 
   @Override
   public String toString() {
-    return "Team{" + "id=" + id + ", name=" + name + '}';
+    return "Team{" + "id=" + id + ", name='" + name + '\'' + '}';
   }
 }
