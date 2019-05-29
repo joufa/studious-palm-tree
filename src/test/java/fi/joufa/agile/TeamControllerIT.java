@@ -1,6 +1,6 @@
 package fi.joufa.agile;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.joufa.agilesurvey.AgileApplication;
@@ -46,9 +46,33 @@ public class TeamControllerIT {
   @Test
   public void POST_ApiTeams_shouldCreateNewTeam() throws Exception {
     final Team teamToPost = new Team();
-    teamToPost.setName("Testitiimi");
+    teamToPost.setName("Tiimi1");
     final String JSON = objectMapper.writeValueAsString(teamToPost);
-    System.out.println(JSON);
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    HttpEntity<String> entity = new HttpEntity<String>(JSON, headers);
+
+    ResponseEntity<String> response =
+        restTemplate.exchange(
+            createURLWithPort("/api/teams"), HttpMethod.POST, entity, String.class);
+    System.out.println(response.getBody());
+    final Team expected = objectMapper.readValue(response.getBody(), Team.class);
+
+    assertEquals(teamToPost.getName(), expected.getName());
+    assertNotNull(expected.getCreated());
+    assertNotNull(expected.getId());
+  }
+
+  @Test
+  public void GET_ApiTeams_shouldGiveOneTeam() throws Exception {
+    HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+
+    ResponseEntity<String> response =
+        restTemplate.exchange(
+            createURLWithPort("/api/teams/1"), HttpMethod.GET, entity, String.class);
+    System.out.println(response.getBody());
+    final Team expected = objectMapper.readValue(response.getBody(), Team.class);
+
+    assertNotNull(expected);
   }
 
   private String createURLWithPort(String uri) {

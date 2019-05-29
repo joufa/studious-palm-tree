@@ -15,5 +15,5 @@ public class Question extends BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column private String question;
+  @Column private String questionText;
 }
