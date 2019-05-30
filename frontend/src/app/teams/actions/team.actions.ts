@@ -10,5 +10,15 @@ export const loadTeamsSuccess = createAction(
     props<{ teams: Team[] }>()
 );
 
-const all = union({loadTeams, loadTeamsSuccess});
+export const createTeam = createAction(
+    '[Team] Create a team',
+    props<{team: Team}>()
+);
+
+export const createTeamSuccess = createAction(
+    '[Team] Create team success',
+    props<{team: Team}>()
+);
+
+const all = union({loadTeams, loadTeamsSuccess, createTeam, createTeamSuccess});
 export type TeamActionsUnion = typeof all;

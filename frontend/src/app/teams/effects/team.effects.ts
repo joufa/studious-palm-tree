@@ -25,6 +25,18 @@ export class TeamEffects {
     )
   );
 
+  @Effect()
+  createTeam$: Observable<Action> = this.actions$.pipe(
+    ofType(TeamActions.createTeam.type),
+    switchMap((action) =>
+      this.service.createTeam(action.team).pipe(
+        map((team: Team) =>
+          TeamActions.createTeamSuccess({ team })
+        )
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions<TeamActions.TeamActionsUnion>,
     private service: TeamsApiService

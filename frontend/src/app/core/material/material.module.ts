@@ -10,10 +10,14 @@ import {
   MatToolbarModule,
   MatProgressSpinnerModule,
   MatDialogModule,
+  MatOptionModule,
+  MatSelectModule,
 } from '@angular/material';
 
 @NgModule({
   imports: [
+    MatSelectModule,
+    MatOptionModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,
@@ -25,6 +29,8 @@ import {
     MatDialogModule,
   ],
   exports: [
+    MatSelectModule,
+    MatOptionModule,
     MatInputModule,
     MatCardModule,
     MatButtonModule,

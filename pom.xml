@@ -18,7 +18,6 @@
         <java.version>1.8</java.version>
         <skip.unit.tests>false</skip.unit.tests>
         <skip.integration.tests>true</skip.integration.tests>
-        <heroku.app.name>agileselfassesment</heroku.app.name>
     </properties>
 
     <dependencies>
@@ -233,9 +232,6 @@
                         </profile>
                         <profile>
                             production
-                        </profile>
-                        <profile>
-                            it
                         </profile>
                     </profiles>
                 </configuration>

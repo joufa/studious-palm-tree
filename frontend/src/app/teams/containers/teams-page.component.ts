@@ -10,6 +10,7 @@ import { loadTeams } from '../actions/team.actions';
     selector: 'app-view-teams-page',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
+    <app-add-team></app-add-team>
     <div *ngFor="let team of (teams$ | async)">
         <app-team-card [team]="team"></app-team-card>
     </div>

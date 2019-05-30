@@ -23,6 +23,8 @@ export function reducer(
     switch (action.type) {
         case TeamActions.loadTeamsSuccess.type:
             return adapter.addMany(action.teams, state);
+        case TeamActions.createTeamSuccess.type:
+            return adapter.addOne(action.team, state);
         default:
             return state;
     }
