@@ -21,8 +21,8 @@ export function reducer(
     action: TeamActions.TeamActionsUnion
 ): State {
     switch (action.type) {
-        case TeamActions.loadTeams.type:
-            return adapter.addMany([generateMockTeam()], state);
+        case TeamActions.loadTeamsSuccess.type:
+            return adapter.addMany(action.teams, state);
         default:
             return state;
     }

@@ -10,9 +10,10 @@ import { loadTeams } from '../actions/team.actions';
     selector: 'app-view-teams-page',
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: `
-  jess:
-    {{debug(teams$ | async)}}
-  `,
+    <div *ngFor="let team of (teams$ | async)">
+        <app-team-card [team]="team"></app-team-card>
+    </div>
+    `,
 })
 export class TeamsPageComponent implements OnInit {
     teams$: Observable<Team[]>;
@@ -23,9 +24,5 @@ export class TeamsPageComponent implements OnInit {
 
     ngOnInit() {
         this.store.dispatch(loadTeams);
-    }
-
-    debug(a: any) {
-        return JSON.stringify(a);
     }
 }
