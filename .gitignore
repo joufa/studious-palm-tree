@@ -80,3 +80,7 @@ Thumbs.db
 
 ### Project specific environment variable file ####
 variables.env
+/infrastructure/spring-app/spring-application/target/
+/infrastructure/spring-app/rest-services/target/
+/infrastructure/spring-app/database-repository/target/
+/infrastructure/spring-app/database-repository/nbproject/
