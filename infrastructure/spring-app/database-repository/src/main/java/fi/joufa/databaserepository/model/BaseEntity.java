@@ -10,4 +10,3 @@ public abstract class BaseEntity {
 
   @CreationTimestamp private Date created;
 }
-

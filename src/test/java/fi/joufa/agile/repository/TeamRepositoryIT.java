@@ -3,7 +3,7 @@ package fi.joufa.agile.repository;
 import static org.junit.Assert.*;
 
 import fi.joufa.agilesurvey.AgileApplication;
-import fi.joufa.agilesurvey.domain.Team;
+import fi.joufa.agilesurvey.model.Team;
 import fi.joufa.agilesurvey.repository.TeamRepository;
 import java.util.Date;
 import java.util.List;

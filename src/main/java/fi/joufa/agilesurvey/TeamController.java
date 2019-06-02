@@ -1,6 +1,6 @@
 package fi.joufa.agilesurvey;
 
-import fi.joufa.agilesurvey.domain.Team;
+import fi.joufa.agilesurvey.model.Team;
 import fi.joufa.agilesurvey.repository.TeamRepository;
 import java.util.List;
 import java.util.Optional;

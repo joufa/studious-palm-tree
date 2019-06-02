@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.joufa.agilesurvey.AgileApplication;
-import fi.joufa.agilesurvey.domain.Team;
+import fi.joufa.agilesurvey.model.Team;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
