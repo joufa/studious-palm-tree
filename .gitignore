@@ -2,6 +2,7 @@ HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 */target/*
+*/nbproject/*
 
 ### STS ###
 .apt_generated
@@ -81,11 +82,3 @@ Thumbs.db
 
 ### Project specific environment variable file ####
 variables.env
-/infrastructure/spring-app/spring-application/target/
-/infrastructure/spring-app/rest-services/target/
-/infrastructure/spring-app/database-repository/target/
-/infrastructure/spring-app/database-repository/nbproject/
-/repository-interface/target/
-/domain/target/
-/agile-logic/target/
-/agileservices/target/
