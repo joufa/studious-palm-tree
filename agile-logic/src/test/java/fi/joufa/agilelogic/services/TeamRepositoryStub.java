@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 public class TeamRepositoryStub implements TeamRepository {
 
   private final List<Team> teams;
+  private final Integer idSequence = 1;
 
   public TeamRepositoryStub(Team... teams) {
     this.teams = new ArrayList();
@@ -32,8 +33,14 @@ public class TeamRepositoryStub implements TeamRepository {
 
   @Override
   public Team createTeam(Team team) {
-    teams.add(team);
-    return team;
+    final Team addedTeam =
+        new Team(
+            Long.valueOf(idSequence + 1),
+            team.getName(),
+            team.getMemberCount(),
+            team.getDescription());
+    teams.add(addedTeam);
+    return addedTeam;
   }
 
   @Override
@@ -57,5 +64,10 @@ public class TeamRepositoryStub implements TeamRepository {
     teams.clear();
     teams.addAll(tmp);
     return team;
+  }
+
+  @Override
+  public Team findTeamByName(String name) {
+    return teams.stream().filter(team -> team.getName().equals(name)).findFirst().orElse(null);
   }
 }
