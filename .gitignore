@@ -1,5 +1,5 @@
 HELP.md
-/target/
+target/
 !.mvn/wrapper/maven-wrapper.jar
 */target/*
 */nbproject/*
@@ -20,29 +20,28 @@ HELP.md
 *.ipr
 
 ### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-/build/
+nbproject/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+build/
 
 ### VS Code ###
 .vscode/
 
 ### Maven Frontend plugin
-/frontend/node_modules/
-/frontend/node
-/node/
+node_modules/
+node/
 /src/main/resources/static/*.*
 
 ## From Angular project
 # compiled output
-/frontend/dist
-/frontend/tmp
-/frontend/out-tsc
+dist/
+tmp/
+out-tsc/
 # Only exists if Bazel was run
-/frontend/bazel-out
+bazel-out/
 
 
 # profiling files
