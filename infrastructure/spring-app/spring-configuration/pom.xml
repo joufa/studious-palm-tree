@@ -5,32 +5,39 @@
             <groupId>fi.joufa</groupId>
             <artifactId>spring-app</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <relativePath>../pom.xml</relativePath>
       </parent>
-      <artifactId>rest-services</artifactId>
-      <name>Rest Services</name>
-
+      <artifactId>spring-configuration</artifactId>
+      <packaging>jar</packaging>
+      <name>Spring Configuration</name>
       <properties>
             <maven.compiler.source>1.8</maven.compiler.source>
             <maven.compiler.target>1.8</maven.compiler.target>
+            <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       </properties>
+    
       <dependencies>
             <dependency>
-                  <groupId>org.springframework.boot</groupId>
-                  <artifactId>spring-boot-starter-web</artifactId>
-                   <version>2.1.5.RELEASE</version>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>spring-context</artifactId>
+                  <version>5.1.7.RELEASE</version>
             </dependency>
             <dependency>
-                  <groupId>javax.inject</groupId>
-                  <artifactId>javax.inject</artifactId>
-                  <version>1</version>
-                  <type>jar</type>
+                  <groupId>fi.joufa</groupId>
+                  <artifactId>agile-services</artifactId>
+                  <version>${project.version}</version>
             </dependency>
             <dependency>
                   <groupId>fi.joufa</groupId>
                   <artifactId>agile-logic</artifactId>
-                  <version>0.0.1-SNAPSHOT</version>
-                  <type>jar</type>
+                     <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                  <groupId>fi.joufa</groupId>
+                  <artifactId>database-repository</artifactId>
+            </dependency>
+            <dependency>
+                  <groupId>fi.joufa</groupId>
+                  <artifactId>rest-services</artifactId>
             </dependency>
       </dependencies>
 </project>

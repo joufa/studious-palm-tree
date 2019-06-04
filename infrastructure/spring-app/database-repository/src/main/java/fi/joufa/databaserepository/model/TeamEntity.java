@@ -4,15 +4,19 @@ import javax.persistence.*;
 
 @Entity
 @Table
-public class TeamEntity extends BaseEntity {
+public class TeamEntity {
 
   @Id
   @Column(name = "team_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(unique = true)
+  @Column(unique = true, nullable = false)
   private String name;
+
+  @Column private Integer memberCount;
+
+  @Column private String description;
 
   public Long getId() {
     return id;
@@ -30,8 +34,19 @@ public class TeamEntity extends BaseEntity {
     this.name = name;
   }
 
-  @Override
-  public String toString() {
-    return "Team{" + "id=" + id + ", name='" + name + '\'' + '}';
+  public Integer getMemberCount() {
+    return memberCount;
+  }
+
+  public void setMemberCount(Integer memberCount) {
+    this.memberCount = memberCount;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 }

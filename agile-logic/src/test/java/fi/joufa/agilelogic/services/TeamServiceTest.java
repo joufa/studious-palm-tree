@@ -13,13 +13,13 @@ import org.junit.Test;
 
 public class TeamServiceTest {
 
-  private TeamService teamService;
+  private TeamServiceImpl teamService;
   private TeamRepository teamRepository;
 
   @Before
   public void init() {
     this.teamRepository = new TeamRepositoryStub(addTeam());
-    this.teamService = new TeamService(this.teamRepository);
+    this.teamService = new TeamServiceImpl(this.teamRepository);
   }
 
   @Test

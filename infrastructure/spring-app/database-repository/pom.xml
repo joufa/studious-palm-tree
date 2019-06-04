@@ -9,6 +9,7 @@
     </parent>
     <artifactId>database-repository</artifactId>
     <packaging>jar</packaging>
+    <name>Spring Database Repository</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -58,6 +59,24 @@
             <artifactId>assertj-core</artifactId>
             <version>3.11.1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>fi.joufa</groupId>
+            <artifactId>agile-domain</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>fi.joufa</groupId>
+            <artifactId>repository-interface</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 </project>

@@ -1,5 +1,6 @@
 package fi.joufa.databaserepository.repository;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.*;
 
 import fi.joufa.databaserepository.config.DatabaseConfiguration;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = DatabaseConfiguration.class)
@@ -24,6 +24,5 @@ public class TeamEntityRepositoryTest {
   public void injectedComponentsAreNotNull() {
     assertThat(entityManager).isNotNull();
     assertThat(teamEntityRepository).isNotNull();
-
   }
 }

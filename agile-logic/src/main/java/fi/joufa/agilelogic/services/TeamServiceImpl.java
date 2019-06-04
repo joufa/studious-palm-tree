@@ -1,18 +1,19 @@
 package fi.joufa.agilelogic.services;
 
 import fi.joufa.agileservices.exceptions.AgileException;
+import fi.joufa.agileservices.services.TeamService;
 import fi.joufa.domain.model.Team;
 import fi.joufa.repositoryinterface.TeamRepository;
 import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
 
-public class TeamService implements fi.joufa.agileservices.services.TeamService {
+public class TeamServiceImpl implements TeamService {
 
   private final TeamRepository teamRepository;
 
   @Inject
-  public TeamService(TeamRepository teamRepository) {
+  public TeamServiceImpl(TeamRepository teamRepository) {
     this.teamRepository = teamRepository;
   }
 
