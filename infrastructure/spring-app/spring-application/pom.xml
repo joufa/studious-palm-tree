@@ -11,8 +11,6 @@
       <groupId>fi.joufa</groupId>
       <artifactId>spring-webapp</artifactId>
       <name>Spring Webapp</name>
-
-
      
       <dependencies>
             <dependency>
@@ -21,15 +19,41 @@
                   <version>2.1.5.RELEASE</version>
             </dependency>
             <dependency>
-                  <groupId>org.springframework.boot</groupId>
-                  <artifactId>spring-boot-starter-test</artifactId>
-                  <version>2.1.5.RELEASE</version>
-                  <scope>test</scope>
+                  <groupId>fi.joufa</groupId>
+                  <artifactId>agile-domain</artifactId>
+            </dependency>
+            <dependency>
+                  <groupId>fi.joufa</groupId>
+                  <artifactId>repository-interface</artifactId>
+            </dependency>
+            <dependency>
+                  <groupId>fi.joufa</groupId>
+                  <artifactId>agile-services</artifactId>
+            </dependency>
+            <dependency>
+                  <groupId>fi.joufa</groupId>
+                  <artifactId>agile-logic</artifactId>
+            </dependency>
+            <dependency>
+                  <groupId>fi.joufa</groupId>
+                  <artifactId>spring-configuration</artifactId>
+            </dependency>
+            <dependency>
+                  <groupId>fi.joufa</groupId>
+                  <artifactId>database-repository</artifactId>
             </dependency>
             <dependency>
                   <groupId>fi.joufa</groupId>
                   <artifactId>rest-services</artifactId>
             </dependency>
+
+            <dependency>
+                  <groupId>org.springframework.boot</groupId>
+                  <artifactId>spring-boot-starter-test</artifactId>
+                  <version>2.1.5.RELEASE</version>
+                  <scope>test</scope>
+            </dependency>
+          
       </dependencies>
 
       <build>
@@ -39,12 +63,12 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <version>2.1.5.RELEASE</version>
                         <configuration>
-                    <profiles>
-                        <profile>
-                            development
-                        </profile>
-                    </profiles>
-                </configuration>
+                              <profiles>
+                                    <profile>
+                                          development
+                                    </profile>
+                              </profiles>
+                        </configuration>
                         <executions>
                               <execution>
                                     <goals>

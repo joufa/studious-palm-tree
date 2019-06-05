@@ -16,7 +16,6 @@
             <module>database-repository</module>
             <module>rest-services</module>
             <module>spring-application</module>
-       
             <module>spring-configuration</module>
       </modules>
       <dependencyManagement>
@@ -29,18 +28,23 @@
                   <dependency>
                         <groupId>fi.joufa</groupId>
                         <artifactId>database-repository</artifactId>
-                        <version>${project.version}</version>
+                          <version>0.0.1-SNAPSHOT</version>
                   </dependency>
                   <dependency>
                         <groupId>fi.joufa</groupId>
                         <artifactId>rest-services</artifactId>
-                        <version>${project.version}</version>
+                          <version>0.0.1-SNAPSHOT</version>
                   </dependency>
                   <dependency>
                         <groupId>fi.joufa</groupId>
                         <artifactId>spring-webapp</artifactId>
-                        <version>${project.version}</version>
+                          <version>0.0.1-SNAPSHOT</version>
                   </dependency>
+                  <dependency>
+                        <groupId>fi.joufa</groupId>
+                        <artifactId>spring-configuration</artifactId>
+                          <version>0.0.1-SNAPSHOT</version>
+                  </dependency>                 
             </dependencies>
       </dependencyManagement>
 

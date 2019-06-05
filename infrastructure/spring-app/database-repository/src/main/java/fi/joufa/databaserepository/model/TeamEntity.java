@@ -3,7 +3,7 @@ package fi.joufa.databaserepository.model;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "team")
 public class TeamEntity {
 
   @Id

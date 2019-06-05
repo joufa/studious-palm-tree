@@ -63,14 +63,10 @@
         <dependency>
             <groupId>fi.joufa</groupId>
             <artifactId>agile-domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>fi.joufa</groupId>
             <artifactId>repository-interface</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>

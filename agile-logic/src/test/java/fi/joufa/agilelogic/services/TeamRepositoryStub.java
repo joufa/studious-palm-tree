@@ -1,13 +1,13 @@
 package fi.joufa.agilelogic.services;
 
 import fi.joufa.domain.model.Team;
-import fi.joufa.repositoryinterface.TeamRepository;
+import fi.joufa.repositoryinterface.TeamRepositoryI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TeamRepositoryStub implements TeamRepository {
+public class TeamRepositoryStub implements TeamRepositoryI {
 
   private final List<Team> teams;
   private final Integer idSequence = 1;

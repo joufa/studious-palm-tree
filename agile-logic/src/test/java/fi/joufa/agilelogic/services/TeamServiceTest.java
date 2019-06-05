@@ -6,7 +6,7 @@ import static org.junit.Assert.fail;
 
 import fi.joufa.agileservices.exceptions.AgileException;
 import fi.joufa.domain.model.Team;
-import fi.joufa.repositoryinterface.TeamRepository;
+import fi.joufa.repositoryinterface.TeamRepositoryI;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import org.junit.Test;
 public class TeamServiceTest {
 
   private TeamServiceImpl teamService;
-  private TeamRepository teamRepository;
+  private TeamRepositoryI teamRepository;
 
   @Before
   public void init() {
