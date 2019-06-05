@@ -6,4 +6,4 @@
 package fi.joufa;
 
 /** @author udanre */
-public class BasePackageMarker {}
+public interface BasePackageMarker {}

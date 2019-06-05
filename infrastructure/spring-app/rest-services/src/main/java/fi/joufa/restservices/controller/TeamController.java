@@ -1,6 +1,5 @@
 package fi.joufa.restservices.controller;
 
-import fi.joufa.agileservices.exceptions.AgileException;
 import fi.joufa.agileservices.services.TeamService;
 import fi.joufa.domain.model.Team;
 import java.util.List;
@@ -21,7 +20,7 @@ public class TeamController {
   }
 
   @GetMapping(path = "/teams")
-  public List<Team> findAll() throws AgileException {
+  public List<Team> findAll() {
     return teamService.findAll();
   }
 }

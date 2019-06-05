@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fi.joufa.databaserepository.repository.impl;
 
 import fi.joufa.databaserepository.mapper.DomainToEntityMapper;
@@ -31,7 +26,7 @@ public class TeamRepositoryImpl implements TeamRepositoryI {
   @Override
   public Team findTeamById(Long teamId) {
     Optional<TeamEntity> teamEntity = teamEntityRepository.findById(teamId);
-    if (teamEntity.get() != null) {
+    if (teamEntity.isPresent()) {
       return domainToEntityMapper.teamEntityToTeam(teamEntity.get());
     }
     return null;

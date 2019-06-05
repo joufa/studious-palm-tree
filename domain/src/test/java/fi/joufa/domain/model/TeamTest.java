@@ -8,7 +8,8 @@ public class TeamTest {
 
     @Test
     public void team_shouldInitialize() {
-        final Team team = new TeamBuilder().setName("Karhukopla").setMemberCount(3).setDescription("Kiva tiimi").createTeam();
+        final Team team = new TeamBuilder().setName("Karhukopla").setMemberCount(3).setDescription("Kiva tiimi").setTeamId(Long.valueOf(1)).createTeam();
+        assertEquals("Karhukopla", team.getName());
     }
 
 }
