@@ -34,8 +34,11 @@ public class TeamRepositoryImpl implements TeamRepositoryI {
 
   @Override
   public Team findTeamByName(String name) {
-    throw new UnsupportedOperationException(
-        "Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+    final TeamEntity teamEntity = teamEntityRepository.findTeamEntityByName(name);
+    if (teamEntity != null) {
+      return domainToEntityMapper.teamEntityToTeam(teamEntity);
+    }
+    return null;
   }
 
   @Override
@@ -48,19 +51,22 @@ public class TeamRepositoryImpl implements TeamRepositoryI {
 
   @Override
   public Team createTeam(Team team) {
-    throw new UnsupportedOperationException(
-        "Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+    final TeamEntity teamEntity = domainToEntityMapper.teamToTeamEntity(team);
+    return domainToEntityMapper.teamEntityToTeam(teamEntityRepository.save(teamEntity));
   }
 
   @Override
   public Team updateTeam(Team team) {
-    throw new UnsupportedOperationException(
-        "Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+    final TeamEntity teamToUpdate = teamEntityRepository.getOne(team.getTeamId());
+    teamToUpdate.setName(team.getName());
+    teamToUpdate.setMemberCount(team.getMemberCount());
+    teamToUpdate.setDescription(team.getDescription());
+    return domainToEntityMapper.teamEntityToTeam(teamEntityRepository.save(teamToUpdate));
   }
 
   @Override
   public Team deleteTeam(Team team) {
-    throw new UnsupportedOperationException(
-        "Not supported yet."); // To change body of generated methods, choose Tools | Templates.
+    teamEntityRepository.delete(domainToEntityMapper.teamToTeamEntity(team));
+    return team;
   }
 }
