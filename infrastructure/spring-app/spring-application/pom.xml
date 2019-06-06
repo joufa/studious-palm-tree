@@ -40,6 +40,10 @@
             </dependency>
             <dependency>
                   <groupId>fi.joufa</groupId>
+                  <artifactId>frontend</artifactId>
+            </dependency>
+            <dependency>
+                  <groupId>fi.joufa</groupId>
                   <artifactId>database-repository</artifactId>
             </dependency>
             <dependency>
@@ -62,13 +66,7 @@
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <version>2.1.5.RELEASE</version>
-                        <configuration>
-                              <profiles>
-                                    <profile>
-                                          development
-                                    </profile>
-                              </profiles>
-                        </configuration>
+
                         <executions>
                               <execution>
                                     <goals>

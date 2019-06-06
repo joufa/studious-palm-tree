@@ -81,3 +81,5 @@ Thumbs.db
 
 ### Project specific environment variable file ####
 variables.env
+
+static/
