@@ -6,7 +6,9 @@ import fi.joufa.domain.model.Team;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 public class TeamServiceImpl implements TeamService {
 
@@ -17,6 +19,7 @@ public class TeamServiceImpl implements TeamService {
     this.teamRepository = teamRepository;
   }
 
+  @Transactional
   @Override
   public Team createTeam(Team team) throws AgileException {
     if (team.getName() == null) {
@@ -30,6 +33,7 @@ public class TeamServiceImpl implements TeamService {
     return teamRepository.createTeam(team);
   }
 
+  @Transactional
   @Override
   public Team editTeam(Team team) throws AgileException {
     if (team.getTeamId() == null) {
@@ -42,6 +46,7 @@ public class TeamServiceImpl implements TeamService {
         new Team(team.getTeamId(), team.getName(), team.getMemberCount(), team.getDescription()));
   }
 
+  @Transactional
   @Override
   public Team deleteTeam(Long teamId) throws AgileException {
     if (teamId == null) {
@@ -55,12 +60,9 @@ public class TeamServiceImpl implements TeamService {
   }
 
   @Override
-  public Team findTeamById(Long teamId) throws AgileException {
+  public Optional<Team> findTeamById(Long teamId) {
     final Team team = teamRepository.findTeamById(teamId);
-    if (team == null) {
-      throw new AgileException("No team found");
-    }
-    return team;
+    return team != null ? Optional.of(team) : Optional.empty();
   }
 
   @Override
