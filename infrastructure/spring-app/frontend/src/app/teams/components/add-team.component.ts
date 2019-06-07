@@ -2,14 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-add-team',
-  template: `
-  <div class="example-container">
-  <mat-form-field>
-  <input matInput placeholder="Input">
-</mat-form-field>
-
-</div>
-  `,
+  templateUrl: 'add-team.component.html',
   styles: [`
   .example-container {
     display: flex;
@@ -25,6 +18,9 @@ export class AddTeamComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSubmit() {
   }
 
 }

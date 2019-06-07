@@ -12,7 +12,7 @@ export const COMPONENTS = [
   declarations: [COMPONENTS],
   imports: [
     RouterModule,
-    MaterialModule
+    MaterialModule,
   ],
   exports: [COMPONENTS]
 })

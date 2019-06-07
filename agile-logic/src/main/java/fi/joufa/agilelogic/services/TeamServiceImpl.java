@@ -26,10 +26,9 @@ public class TeamServiceImpl implements TeamService {
       throw new AgileException("Team name cannot be empty");
     }
     final Team existingTeam = teamRepository.findTeamByName(team.getName());
-    if (team.getName().equals(existingTeam.getName())) {
+    if (existingTeam != null && team.getName().equals(existingTeam.getName())) {
       throw new AgileException("Team name must be unique");
     }
-
     return teamRepository.createTeam(team);
   }
 

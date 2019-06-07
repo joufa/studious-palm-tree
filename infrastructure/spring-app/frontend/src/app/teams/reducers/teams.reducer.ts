@@ -8,7 +8,7 @@ export interface State extends EntityState<Team> {
 }
 
 export const adapter: EntityAdapter<Team> = createEntityAdapter<Team>({
-    selectId: (team: Team) => team.id,
+    selectId: (team: Team) => team.teamId,
     sortComparer: false,
 });
 
@@ -25,6 +25,10 @@ export function reducer(
             return adapter.addMany(action.teams, state);
         case TeamActions.createTeamSuccess.type:
             return adapter.addOne(action.team, state);
+        case TeamActions.updateTeamSuccess.type:
+            return adapter.updateOne(action.team, state);
+        case TeamActions.deleteTeamSuccess.type:
+            return adapter.removeOne(action.team.teamId, state);
         default:
             return state;
     }

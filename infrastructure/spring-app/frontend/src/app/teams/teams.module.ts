@@ -8,8 +8,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { TeamEffects } from './effects/team.effects';
 import { TeamCardComponent } from './components/team-card.component';
 import { MaterialModule } from '../core/material';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddTeamComponent } from './components/add-team.component';
+
 @NgModule({
   declarations: [TeamsPageComponent, TeamCardComponent, AddTeamComponent],
   imports: [
@@ -17,6 +18,7 @@ import { AddTeamComponent } from './components/add-team.component';
     MaterialModule,
     TeamsRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     StoreModule.forFeature('teams', reducers),
     EffectsModule.forFeature([TeamEffects]),
   ]

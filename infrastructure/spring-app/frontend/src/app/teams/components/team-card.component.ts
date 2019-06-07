@@ -9,6 +9,11 @@ import { Team } from '../models/team';
     <mat-card-title>{{team.name}}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
+  <ul>
+    <li>{{team.teamId}}</li>
+    <li>{{team.memberCount}}</li>
+    <li>{{team.description}}</li>
+  </ul>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button>MUOKKAA</button>
