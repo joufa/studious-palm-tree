@@ -11,6 +11,7 @@ public class DomainToEntityMapper {
     teamEntity.setId(team.getTeamId());
     teamEntity.setName(team.getName());
     teamEntity.setMemberCount(team.getMemberCount());
+    teamEntity.setDescription(team.getDescription());
     return teamEntity;
   }
 

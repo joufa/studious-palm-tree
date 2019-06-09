@@ -8,10 +8,10 @@ public class TeamEntity {
 
   @Id
   @Column(name = "team_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue
   private Long id;
 
-  @Column(unique = true, nullable = false)
+  @Column(unique = true)
   private String name;
 
   @Column private Integer memberCount;

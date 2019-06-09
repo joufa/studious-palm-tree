@@ -32,7 +32,7 @@
                 </goals>
                 <phase>generate-resources</phase>
                 <configuration>
-                  <nodeVersion>v10.15.1</nodeVersion>
+                  <nodeVersion>v12.4.0</nodeVersion>
                 </configuration>
               </execution>
               <execution>

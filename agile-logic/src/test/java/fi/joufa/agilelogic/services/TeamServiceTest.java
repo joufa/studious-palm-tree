@@ -8,6 +8,7 @@ import fi.joufa.agileservices.exceptions.AgileException;
 import fi.joufa.domain.model.Team;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
 import java.util.List;
+import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,17 +25,14 @@ public class TeamServiceTest {
 
   @Test
   public void findTeam_returnsTeam_success() {
-    try {
-      final Team team = teamService.findTeamById(Long.valueOf(1));
-      assertThat(team.getTeamId()).isEqualTo(Long.valueOf(1));
-    } catch (AgileException e) {
-      fail(String.format("Error in finding teams: %s", e.getMessage()));
-    }
+    final Team team = teamService.findTeamById(Long.valueOf(1)).get();
+    assertThat(team.getTeamId()).isEqualTo(Long.valueOf(1));
   }
 
-  @Test(expected = AgileException.class)
-  public void findTeam_returnsTeam_notFound() throws Exception {
-    final Team team = teamService.findTeamById(Long.valueOf(2));
+  @Test
+  public void findTeam_returnsTeam_notFound() {
+    final Optional<Team> team = teamService.findTeamById(Long.valueOf(2));
+    assertThat(team).isEqualTo(Optional.empty());
   }
 
   @Test
@@ -44,17 +42,11 @@ public class TeamServiceTest {
     assertThat(createdTeam.getTeamId()).isNotNull();
   }
 
-  @Test(expected = AgileException.class)
-  public void createNewTeam_failure() throws Exception {
-    final Team team = new Team(null, "Testi", 3, "Kissalan tiimi");
-    teamService.createTeam(team);
-  }
-
   @Test
   public void editTeam_updatesTeamData() {
     try {
-      final Team team = teamService.findTeamById(Long.valueOf(1));
-      final Team newTeam = new Team(team.getTeamId(), "Uusi nimi", 6, "Uusi kuvaus");
+      final Optional<Team> team = teamService.findTeamById(Long.valueOf(1));
+      final Team newTeam = new Team(team.get().getTeamId(), "Uusi nimi", 6, "Uusi kuvaus");
       final Team updatedTeam = teamService.editTeam(newTeam);
       assertThat(updatedTeam.getTeamId()).isEqualTo(Long.valueOf(1));
       assertThat(updatedTeam.getName()).isEqualTo("Uusi nimi");

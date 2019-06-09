@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Team } from '../../teams/models/team';
+import { Team, TeamDTO } from '../../teams/models/team';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,12 @@ export class TeamsApiService {
       return this.http.get<Team[]>(`${this.API_PATH}`);
   }
 
-  createTeam(team: Team): Observable<Team> {
-    return this.http.post<Team>(`${this.API_PATH}`, team);
+  createTeam(team: TeamDTO): Observable<Team> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    };
+    return this.http.post<Team>(`${this.API_PATH}`, team, httpOptions);
   }
 }

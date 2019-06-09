@@ -1,28 +1,61 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Team } from '../models/team';
 
 @Component({
   selector: 'app-team-card',
   template: `
-  <mat-card>
-  <mat-card-header>
-    <mat-card-title>{{team.name}}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>MUOKKAA</button>
-  </mat-card-actions>
-</mat-card>
-  `,
-  styles: []
-})
-export class TeamCardComponent implements OnInit {
+    <mat-card *ngIf='team'>
+      <mat-card-header>
+        <mat-card-title>{{ name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
 
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>MUOKKAA</button>
+      </mat-card-actions>
+    </mat-card>
+  `,
+  styles: [
+    `
+    :host {
+      display: flex;
+    }
+    mat-card {
+      width: 400px;
+      margin: 15px;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-between;
+    }
+
+    @media only screen and (max-width: 768px) {
+      mat-card {
+        margin: 15px 0 !important;
+      }
+    }
+    mat-card:hover {
+      box-shadow: 3px 3px 16px -2px rgba(0, 0, 0, 0.5);
+    }
+    `]
+})
+export class TeamCardComponent {
   @Input()
   team: Team;
 
-  ngOnInit() {
+  get name() {
+    return this.team.name;
   }
 
+  get id() {
+    return this.team.teamId;
+  }
+
+  get desc() {
+    return this.team.description;
+  }
+
+  get memberCount() {
+    return this.team.memberCount;
+  }
 }
