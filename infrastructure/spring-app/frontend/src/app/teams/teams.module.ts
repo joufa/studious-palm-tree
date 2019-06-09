@@ -10,9 +10,11 @@ import { TeamCardComponent } from './components/team-card.component';
 import { MaterialModule } from '../core/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddTeamComponent } from './components/add-team.component';
+import { TeamListComponent } from './components/team-list.component';
+import { AddTeamsPageComponent } from './containers/add-teams.components';
 
 @NgModule({
-  declarations: [TeamsPageComponent, TeamCardComponent, AddTeamComponent],
+  declarations: [TeamsPageComponent, TeamCardComponent, AddTeamComponent, TeamListComponent, AddTeamsPageComponent],
   imports: [
     CommonModule,
     MaterialModule,

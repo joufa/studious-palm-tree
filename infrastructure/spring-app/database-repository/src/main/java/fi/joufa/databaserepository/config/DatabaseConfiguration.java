@@ -17,7 +17,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 public class DatabaseConfiguration {
 
   @Bean
-  @Profile("development")
+  @Profile("test")
   public DataSource devDataSource() {
     EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
     return builder.setType(EmbeddedDatabaseType.H2).build();

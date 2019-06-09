@@ -4,11 +4,11 @@ import fi.joufa.agileservices.exceptions.AgileException;
 import fi.joufa.agileservices.services.TeamService;
 import fi.joufa.domain.model.Team;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
+import java.security.InvalidParameterException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 public class TeamServiceImpl implements TeamService {
 
@@ -19,33 +19,36 @@ public class TeamServiceImpl implements TeamService {
     this.teamRepository = teamRepository;
   }
 
-  @Transactional
   @Override
   public Team createTeam(Team team) throws AgileException {
-    if (team.getName() == null) {
-      throw new AgileException("Team name cannot be empty");
+    try {
+      return teamRepository.createTeam(team);
+    } catch (Exception ex) {
+
+      throw new AgileException("Team creation failed");
     }
-    final Team existingTeam = teamRepository.findTeamByName(team.getName());
-    if (existingTeam != null && team.getName().equals(existingTeam.getName())) {
-      throw new AgileException("Team name must be unique");
-    }
-    return teamRepository.createTeam(team);
   }
 
-  @Transactional
   @Override
   public Team editTeam(Team team) throws AgileException {
-    if (team.getTeamId() == null) {
-      throw new AgileException("Team ID is empty");
+    try {
+      final Team found = teamRepository.findTeamById(team.getTeamId());
+      if (found == null) {
+        throw new InvalidParameterException();
+      }
+
+      final String name = team.getName() != null ? team.getName() : found.getName();
+      final Integer memberCount =
+          team.getMemberCount() != null ? team.getMemberCount() : found.getMemberCount();
+      final String desc =
+          team.getDescription() != null ? team.getDescription() : found.getDescription();
+
+      return teamRepository.updateTeam(new Team(team.getTeamId(), name, memberCount, desc));
+    } catch (Exception ex) {
+      throw new AgileException("Team update failed");
     }
-    if (team.getName() == null) {
-      throw new AgileException("Team name cannot be empty");
-    }
-    return teamRepository.updateTeam(
-        new Team(team.getTeamId(), team.getName(), team.getMemberCount(), team.getDescription()));
   }
 
-  @Transactional
   @Override
   public Team deleteTeam(Long teamId) throws AgileException {
     if (teamId == null) {

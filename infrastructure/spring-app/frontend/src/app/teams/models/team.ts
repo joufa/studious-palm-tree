@@ -7,6 +7,15 @@ export interface Team {
     createdAt?: Date;
 }
 
+export interface TeamDTO {
+    teamId?: number;
+    name: string;
+    memberCount?: number;
+    description?: string;
+    updatedAt?: Date;
+    createdAt?: Date;
+}
+
 export function generateMockTeam() {
     return {
         id: 1,

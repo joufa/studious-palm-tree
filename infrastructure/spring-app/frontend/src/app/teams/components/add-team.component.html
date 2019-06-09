@@ -1,24 +1,25 @@
 <mat-card>
-    <mat-card-title>Luo tiimi</mat-card-title>
-    <mat-card-content>
-        <form (ngSubmit)="onSubmit()" #addTeamForm="ngForm">
-            <div class="example-container">
-                <div class="form-group">
-                    <mat-form-field>
-                        <input matInput placeholder="Nimi">
-                    </mat-form-field>
-                </div>
-                <mat-form-field>
-                    <input matInput placeholder="Koko">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput placeholder="Kuvaus">
-                </mat-form-field>
-            </div>
-        </form>
-    </mat-card-content>
-    <mat-card-footer>
+  <mat-card-title>Luo tiimi</mat-card-title>
+  <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    
+      <mat-form-field>
+        <input type="text" required matInput placeholder="Nimi" formControlName="name"/>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="number" matInput placeholder="Koko" formControlName="memberCount"/>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Kuvaus" formControlName="desc"/>
+      </mat-form-field>
+      <button mat-button type="submit">
+            Luo tiimi
+          </button>
+    </form>
+  </mat-card-content>
+  <mat-card-footer>
+    
+</mat-card-footer>
 
-        <button mat-button type="submit" [disabled]="!addTeamForm.valid">Submit</button>
-    </mat-card-footer>
+ 
 </mat-card>

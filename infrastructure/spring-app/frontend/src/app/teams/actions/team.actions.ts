@@ -1,5 +1,5 @@
-import { createAction, union, props } from '@ngrx/store';
-import { Team } from '../models/team';
+import { createAction, props } from '@ngrx/store';
+import { Team, TeamDTO } from '../models/team';
 import { Update } from '@ngrx/entity';
 
 export const loadTeams = createAction(
@@ -13,7 +13,7 @@ export const loadTeamsSuccess = createAction(
 
 export const createTeam = createAction(
     '[Team] Create a team',
-    props<{team: Team}>()
+    props<{team: TeamDTO}>()
 );
 
 export const createTeamSuccess = createAction(
@@ -41,12 +41,6 @@ export const deleteTeamSuccess = createAction(
     props<{team: Team}>()
 );
 
-const all = union({loadTeams,
-    loadTeamsSuccess,
-    createTeam,
-    createTeamSuccess,
-    updateTeam,
-    updateTeamSuccess,
-    deleteTeam,
-    deleteTeamSuccess});
-export type TeamActionsUnion = typeof all;
+export const teamFailure = createAction(
+    '[Team] Failure on team operation'
+);

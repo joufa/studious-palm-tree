@@ -1,1 +1,0 @@
-INSERT INTO TEAM (NAME, MEMBER_COUNT, DESCRIPTION) VALUES ('Testitiimi', 3, 'Testitiimin kuvaus');

@@ -1,44 +1,43 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { TeamsApiService } from '../../core/services/teams.service';
-import {
-    TeamActions
-} from '../actions';
+import { Router } from '@angular/router';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { TeamsApiService } from '../../core/services/teams.service';
+import { TeamActions } from '../actions';
 import { Team } from '../models/team';
 
 @Injectable()
 export class TeamEffects {
+  loadTeams$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TeamActions.loadTeams.type),
+      switchMap(() =>
+        this.service
+          .getTeams()
+          .pipe(map((teams: Team[]) => TeamActions.loadTeamsSuccess({ teams })))
+      )
+    )
+  );
 
-
-  @Effect()
-  loadTeams$: Observable<Action> = this.actions$.pipe(
-    ofType(TeamActions.loadTeams.type),
-    switchMap(() =>
-      this.service.getTeams().pipe(
-        map((teams: Team[]) =>
-          TeamActions.loadTeamsSuccess({ teams })
+  createTeam$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TeamActions.createTeam.type),
+      mergeMap(({ team }) =>
+        this.service.createTeam(team).pipe(
+          map((createdTeam: Team) => TeamActions.createTeamSuccess({ team: createdTeam })),
+          catchError(() => of(TeamActions.teamFailure))
         )
       )
     )
   );
 
-  @Effect()
-  createTeam$: Observable<Action> = this.actions$.pipe(
-    ofType(TeamActions.createTeam.type),
-    switchMap((action) =>
-      this.service.createTeam(action.team).pipe(
-        map((team: Team) =>
-          TeamActions.createTeamSuccess({ team })
-        )
-      )
-    )
+  createTeamSuccess$ = createEffect(() =>
+          this.actions$.pipe(
+            ofType(TeamActions.createTeamSuccess.type),
+            tap(() => this.router.navigate(['admin']))),
+          {dispatch: false}
   );
 
-  constructor(
-    private actions$: Actions<TeamActions.TeamActionsUnion>,
-    private service: TeamsApiService
-  ) {}
+  constructor(private actions$: Actions, private service: TeamsApiService, private router: Router) {}
 }

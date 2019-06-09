@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: 'admin',
-    loadChildren: './teams/teams.module#TeamsModule'
+    loadChildren: () => import('./teams/teams.module').then(m => m.TeamsModule)
   }
   , { path: '', redirectTo: '/admin', pathMatch: 'full' }
 ];

@@ -1,28 +1,31 @@
-import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppRoutingModule } from './app-routing.module';
+import { EffectsModule } from '@ngrx/effects';
+import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers, CustomSerializer } from './store/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
-import { EffectsModule } from '@ngrx/effects';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './core/containers/app.component';
 import { CoreModule } from './core/core.module';
-import { AppComponent} from './core/containers/app.component';
+import { metaReducers, ROOT_REDUCERS } from './reducers';
+import { CustomSerializer } from './store/reducers';
+
 
 @NgModule({
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(ROOT_REDUCERS, { metaReducers }),
     EffectsModule.forRoot([]),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
-    StoreRouterConnectingModule,
+    !environment.production ? StoreDevtoolsModule.instrument({name: 'The Agile App UI'}) : [],
+    StoreRouterConnectingModule.forRoot(),
     CoreModule
   ],
   providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],

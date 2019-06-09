@@ -25,7 +25,6 @@ public class TeamServiceTest {
 
   @Test
   public void findTeam_returnsTeam_success() {
-
     final Team team = teamService.findTeamById(Long.valueOf(1)).get();
     assertThat(team.getTeamId()).isEqualTo(Long.valueOf(1));
   }
@@ -41,12 +40,6 @@ public class TeamServiceTest {
     final Team team = new Team(null, "Kissalan pojat", 3, "Kissalan tiimi");
     final Team createdTeam = teamRepository.createTeam(team);
     assertThat(createdTeam.getTeamId()).isNotNull();
-  }
-
-  @Test(expected = AgileException.class)
-  public void createNewTeam_failure() throws Exception {
-    final Team team = new Team(null, "Testi", 3, "Kissalan tiimi");
-    teamService.createTeam(team);
   }
 
   @Test
