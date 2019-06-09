@@ -1,11 +1,7 @@
-import {
-    createSelector,
-    createFeatureSelector,
-    ActionReducerMap,
-} from '@ngrx/store';
-
-import * as fromTeams from './teams.reducer';
+import { Action, combineReducers, createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromRoot from '../../store/reducers';
+import * as fromTeams from './teams.reducer';
+
 
 export interface TeamsState {
     teams: fromTeams.State;
@@ -14,11 +10,11 @@ export interface TeamsState {
 export interface State extends fromRoot.State {
     teams: TeamsState;
 }
-
-export const reducers: ActionReducerMap<TeamsState, any> = {
-    teams: fromTeams.reducer,
-};
-
+export function reducers(state: TeamsState | undefined, action: Action) {
+  return combineReducers({
+    teams: fromTeams.reducer
+  })(state, action);
+}
 
 export const getTeamsState = createFeatureSelector<State, TeamsState>('teams');
 
