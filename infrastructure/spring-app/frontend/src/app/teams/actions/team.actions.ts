@@ -13,34 +13,39 @@ export const loadTeamsSuccess = createAction(
 
 export const createTeam = createAction(
     '[Team] Create a team',
-    props<{team: TeamDTO}>()
+    props<{ team: TeamDTO }>()
 );
 
 export const createTeamSuccess = createAction(
     '[Team] Create team success',
-    props<{team: Team}>()
+    props<{ team: Team }>()
 );
 
 export const updateTeam = createAction(
     '[Team] Update a team',
-    props<{team: Team}>()
+    props<{ team: TeamDTO }>()
 );
 
 export const updateTeamSuccess = createAction(
     '[Team] Update team success',
-    props<{team: Update<Team>}>()
+    props<{ team: Team }>()
 );
 
 export const deleteTeam = createAction(
     '[Team] Delete a team',
-    props<{team: Team}>()
+    props<{ team: TeamDTO }>()
 );
 
 export const deleteTeamSuccess = createAction(
     '[Team] Delete team success',
-    props<{team: Team}>()
+    props<{ team: Team }>()
 );
 
 export const teamFailure = createAction(
     '[Team] Failure on team operation'
+);
+
+export const selectTeam = createAction(
+    '[Team] Select a team',
+    props<{ teamId: string }>()
 );

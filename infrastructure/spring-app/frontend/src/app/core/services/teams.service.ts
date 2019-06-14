@@ -9,18 +9,31 @@ import { Team, TeamDTO } from '../../teams/models/team';
 export class TeamsApiService {
   private API_PATH = 'api/teams';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getTeams(): Observable<Team[]> {
-      return this.http.get<Team[]>(`${this.API_PATH}`);
+    return this.http.get<Team[]>(`${this.API_PATH}`);
   }
 
   createTeam(team: TeamDTO): Observable<Team> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       })
     };
     return this.http.post<Team>(`${this.API_PATH}`, team, httpOptions);
+  }
+
+  updateTeam(team: TeamDTO): Observable<Team> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    return this.http.put<Team>(`${this.API_PATH}`, team, httpOptions);
+  }
+
+  deleteTeam(team: TeamDTO): Observable<Team> {
+    return this.http.delete<Team>(`${this.API_PATH}/` + team.teamId.toString());
   }
 }

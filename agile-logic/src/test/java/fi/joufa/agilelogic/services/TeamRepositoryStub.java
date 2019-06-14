@@ -2,6 +2,7 @@ package fi.joufa.agilelogic.services;
 
 import fi.joufa.domain.model.Team;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +19,8 @@ public class TeamRepositoryStub implements TeamRepositoryI {
   }
 
   public static Team addTeam() {
-    return new Team(Long.valueOf(1), "Testi", 3, "Testitiimi");
+    return new Team(
+        Long.valueOf(1), "Testi", 3, "Testitiimi", LocalDateTime.now(), LocalDateTime.now());
   }
 
   @Override
@@ -38,7 +40,9 @@ public class TeamRepositoryStub implements TeamRepositoryI {
             Long.valueOf(idSequence + 1),
             team.getName(),
             team.getMemberCount(),
-            team.getDescription());
+            team.getDescription(),
+            team.getCreatedAt(),
+            team.getUpdatedAt());
     teams.add(addedTeam);
     return addedTeam;
   }

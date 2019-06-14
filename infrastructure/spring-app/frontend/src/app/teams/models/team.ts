@@ -8,6 +8,7 @@ export interface Team {
 }
 
 export interface TeamDTO {
+    operation?: TeamOperationType;
     teamId?: number;
     name: string;
     memberCount?: number;
@@ -15,7 +16,9 @@ export interface TeamDTO {
     updatedAt?: Date;
     createdAt?: Date;
 }
-
+export enum TeamOperationType {
+    CREATE, UPDATE, DELETE
+}
 export function generateMockTeam() {
     return {
         id: 1,

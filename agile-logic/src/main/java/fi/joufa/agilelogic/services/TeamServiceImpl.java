@@ -5,6 +5,7 @@ import fi.joufa.agileservices.services.TeamService;
 import fi.joufa.domain.model.Team;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
 import java.security.InvalidParameterException;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,15 @@ public class TeamServiceImpl implements TeamService {
   @Override
   public Team createTeam(Team team) throws AgileException {
     try {
-      return teamRepository.createTeam(team);
+      final Team teamToCreate =
+          new Team(
+              null,
+              team.getName(),
+              team.getMemberCount(),
+              team.getDescription(),
+              LocalDateTime.now(),
+              LocalDateTime.now());
+      return teamRepository.createTeam(teamToCreate);
     } catch (Exception ex) {
 
       throw new AgileException("Team creation failed");
@@ -43,7 +52,9 @@ public class TeamServiceImpl implements TeamService {
       final String desc =
           team.getDescription() != null ? team.getDescription() : found.getDescription();
 
-      return teamRepository.updateTeam(new Team(team.getTeamId(), name, memberCount, desc));
+      return teamRepository.updateTeam(
+          new Team(
+              team.getTeamId(), name, memberCount, desc, team.getCreatedAt(), LocalDateTime.now()));
     } catch (Exception ex) {
       throw new AgileException("Team update failed");
     }

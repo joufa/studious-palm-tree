@@ -37,7 +37,7 @@ public class TeamServiceTest {
 
   @Test
   public void createNewTeam_success() {
-    final Team team = new Team(null, "Kissalan pojat", 3, "Kissalan tiimi");
+    final Team team = new Team("Kissalan pojat", 3, "Kissalan tiimi");
     final Team createdTeam = teamRepository.createTeam(team);
     assertThat(createdTeam.getTeamId()).isNotNull();
   }
@@ -46,7 +46,14 @@ public class TeamServiceTest {
   public void editTeam_updatesTeamData() {
     try {
       final Optional<Team> team = teamService.findTeamById(Long.valueOf(1));
-      final Team newTeam = new Team(team.get().getTeamId(), "Uusi nimi", 6, "Uusi kuvaus");
+      final Team newTeam =
+          new Team(
+              team.get().getTeamId(),
+              "Uusi nimi",
+              6,
+              "Uusi kuvaus",
+              team.get().getCreatedAt(),
+              team.get().getUpdatedAt());
       final Team updatedTeam = teamService.editTeam(newTeam);
       assertThat(updatedTeam.getTeamId()).isEqualTo(Long.valueOf(1));
       assertThat(updatedTeam.getName()).isEqualTo("Uusi nimi");

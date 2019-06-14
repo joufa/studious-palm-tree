@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import * as fromTeams from '../../teams/reducers';
 import { Team } from '../models/team';
 import { loadTeams } from '../actions/team.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-teams-page',
@@ -13,10 +14,10 @@ import { loadTeams } from '../actions/team.actions';
     <mat-card>
       <mat-card-title>Tiimit</mat-card-title>
     </mat-card>
-  <button routerLink="new" class="fab-absolute" mat-fab>
+  <button routerLink="team" class="fab-absolute" mat-fab>
     <mat-icon class="icon">add</mat-icon>
   </button>
-    <app-team-list [teams]="teams$ | async"></app-team-list>
+    <app-team-list [teams]="teams$ | async" (navigateTo)="navigate($event)"></app-team-list>
   `,
   styles: [`
   mat-card-title {
@@ -41,11 +42,15 @@ import { loadTeams } from '../actions/team.actions';
 export class TeamsPageComponent implements OnInit {
   teams$: Observable<Team[]>;
 
-  constructor(private store: Store<fromTeams.State>) {
+  constructor(private store: Store<fromTeams.State>, private router: Router) {
     this.teams$ = this.store.pipe(select(fromTeams.getAllTeams));
   }
 
   ngOnInit() {
     this.store.dispatch(loadTeams);
+  }
+
+  navigate(event: any) {
+    this.router.navigate(['admin/team/' + event]);
   }
 }

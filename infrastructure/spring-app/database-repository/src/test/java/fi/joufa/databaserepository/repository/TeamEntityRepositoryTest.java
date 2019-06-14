@@ -7,6 +7,7 @@ import fi.joufa.databaserepository.config.DatabaseConfiguration;
 import fi.joufa.databaserepository.mapper.DomainToEntityMapper;
 import fi.joufa.domain.model.Team;
 import fi.joufa.domain.model.TeamBuilder;
+import java.time.LocalDateTime;
 import javax.persistence.EntityManager;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +35,12 @@ public class TeamEntityRepositoryTest {
 
   @Test
   public void create() {
-    Team team = new TeamBuilder().setName("Nakki").createTeam();
+    Team team =
+        new TeamBuilder()
+            .setName("Nakki")
+            .setCreatedAt(LocalDateTime.now())
+            .setUpdatedAt(LocalDateTime.now())
+            .createTeam();
     teamEntityRepository.save(dem.teamToTeamEntity(team));
     teamEntityRepository.save(dem.teamToTeamEntity(team));
   }

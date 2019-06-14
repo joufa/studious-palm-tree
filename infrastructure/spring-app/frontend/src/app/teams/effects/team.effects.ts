@@ -32,12 +32,51 @@ export class TeamEffects {
     )
   );
 
+  updateTeam$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(TeamActions.updateTeam.type),
+    mergeMap(({ team }) =>
+      this.service.updateTeam(team).pipe(
+        map((updatedTeam: Team) => TeamActions.updateTeamSuccess({team: updatedTeam })),
+        catchError(() => of(TeamActions.teamFailure))
+      )
+    )
+  )
+);
+
+deleteTeam$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(TeamActions.deleteTeam.type),
+    mergeMap(({ team }) =>
+      this.service.deleteTeam(team).pipe(
+        map((deletedTeam: Team) => TeamActions.deleteTeamSuccess({team: deletedTeam })),
+        catchError(() => of(TeamActions.teamFailure))
+      )
+    )
+  )
+);
+
+updateTeamSuccess$ = createEffect(() =>
+this.actions$.pipe(
+  ofType(TeamActions.updateTeamSuccess.type),
+  tap(() => this.router.navigate(['admin']))),
+{dispatch: false}
+);
+
   createTeamSuccess$ = createEffect(() =>
           this.actions$.pipe(
             ofType(TeamActions.createTeamSuccess.type),
             tap(() => this.router.navigate(['admin']))),
           {dispatch: false}
   );
+
+  deleteTeamSuccess$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(TeamActions.deleteTeamSuccess.type),
+    tap(() => this.router.navigate(['admin']))),
+  {dispatch: false}
+);
+
 
   constructor(private actions$: Actions, private service: TeamsApiService, private router: Router) {}
 }

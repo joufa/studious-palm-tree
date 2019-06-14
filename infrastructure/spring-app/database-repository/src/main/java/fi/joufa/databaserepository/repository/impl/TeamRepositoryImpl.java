@@ -7,11 +7,15 @@ import fi.joufa.domain.model.Team;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 /** @author udanre */
 public class TeamRepositoryImpl implements TeamRepositoryI {
+
+  private static final Logger LOGGER = Logger.getLogger(TeamRepositoryImpl.class.getName());
 
   private final DomainToEntityMapper domainToEntityMapper;
   private final TeamEntityRepository teamEntityRepository;
@@ -19,6 +23,7 @@ public class TeamRepositoryImpl implements TeamRepositoryI {
   @Inject
   public TeamRepositoryImpl(
       DomainToEntityMapper domainToEntityMapper, TeamEntityRepository teamEntityRepository) {
+    LOGGER.log(Level.FINER, "Initializing class..");
     this.domainToEntityMapper = domainToEntityMapper;
     this.teamEntityRepository = teamEntityRepository;
   }
@@ -57,6 +62,7 @@ public class TeamRepositoryImpl implements TeamRepositoryI {
 
   @Override
   public Team updateTeam(Team team) {
+    LOGGER.log(Level.FINER, "updating team {0} ", team);
     final TeamEntity teamToUpdate = teamEntityRepository.getOne(team.getTeamId());
     teamToUpdate.setName(team.getName());
     teamToUpdate.setMemberCount(team.getMemberCount());

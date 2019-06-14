@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Team } from '../models/team';
+
 
 @Component({
   selector: 'app-team-card',
@@ -12,7 +13,7 @@ import { Team } from '../models/team';
 
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button>MUOKKAA</button>
+        <button mat-button (click)="navigateTo()">MUOKKAA</button>
       </mat-card-actions>
     </mat-card>
   `,
@@ -43,6 +44,9 @@ export class TeamCardComponent {
   @Input()
   team: Team;
 
+  @Output()
+  navigate = new EventEmitter<string>();
+
   get name() {
     return this.team.name;
   }
@@ -57,5 +61,9 @@ export class TeamCardComponent {
 
   get memberCount() {
     return this.team.memberCount;
+  }
+
+  navigateTo() {
+    this.navigate.emit(this.team.teamId.toString());
   }
 }

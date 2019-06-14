@@ -1,5 +1,6 @@
 package fi.joufa.databaserepository.model;
 
+import java.util.Date;
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +18,9 @@ public class TeamEntity {
   @Column private Integer memberCount;
 
   @Column private String description;
+
+  @Column private Date createdAt;
+  @Column private Date updatedAt;
 
   public Long getId() {
     return id;
@@ -48,5 +52,21 @@ public class TeamEntity {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Date getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(Date updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }
