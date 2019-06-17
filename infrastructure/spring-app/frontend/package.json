@@ -3,10 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --open",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
+    "format:write": "prettier '{src,e2e,cypress}/**/*.{ts,json,md,scss}' --write",
+    "format:test": "prettier '{src,e2e,cypress}/**/*.{ts,json,md,scss}' --list-different",
+    "format:write-win": "prettier \"{src,e2e,cypress}/**/*.{ts,json,md,scss}\" --write",
+    "format:test-win": "prettier \"{src,e2e,cypress}/**/*.{ts,json,md,scss}\" --list-different",
     "e2e": "ng e2e"
   },
   "private": true,

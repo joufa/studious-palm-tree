@@ -14,30 +14,35 @@ import { Router } from '@angular/router';
     <mat-card>
       <mat-card-title>Tiimit</mat-card-title>
     </mat-card>
-  <button routerLink="team" class="fab-absolute" mat-fab>
-    <mat-icon class="icon">add</mat-icon>
-  </button>
-    <app-team-list [teams]="teams$ | async" (navigateTo)="navigate($event)"></app-team-list>
+    <button routerLink="team" class="fab-absolute" mat-fab>
+      <mat-icon class="icon">add</mat-icon>
+    </button>
+    <app-team-list
+      [teams]="teams$ | async"
+      (navigateTo)="navigate($event)"
+    ></app-team-list>
   `,
-  styles: [`
-  mat-card-title {
-    display: flex;
-    justify-content: center;
-  }
+  styles: [
+    `
+      mat-card-title {
+        display: flex;
+        justify-content: center;
+      }
 
-  .fab-absolute {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-  }
+      .fab-absolute {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+      }
 
-  @media(min-width: 1024px) {
-     .fab-absolute {
-      bottom: 1.5rem;
-      right: 1.5rem;
-    }
-  }
-  `]
+      @media (min-width: 1024px) {
+        .fab-absolute {
+          bottom: 1.5rem;
+          right: 1.5rem;
+        }
+      }
+    `
+  ]
 })
 export class TeamsPageComponent implements OnInit {
   teams$: Observable<Team[]>;

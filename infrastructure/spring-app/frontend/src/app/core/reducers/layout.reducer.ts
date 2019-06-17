@@ -6,7 +6,7 @@ export interface State {
 }
 
 const initialState: State = {
-  showSidenav: false,
+  showSidenav: false
 };
 
 export function reducer(state: State = initialState, action: Action): State {
@@ -15,12 +15,12 @@ export function reducer(state: State = initialState, action: Action): State {
   switch (specificAction.type) {
     case LayoutActions.closeSidenav.type:
       return {
-        showSidenav: false,
+        showSidenav: false
       };
 
     case LayoutActions.openSidenav.type:
       return {
-        showSidenav: true,
+        showSidenav: true
       };
 
     default:

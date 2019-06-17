@@ -3,7 +3,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'app-sidenav',
   template: `
-    <mat-sidenav #sidenav [opened]="open" (keydown.escape)="sidenav.close()" (closedStart)="closeMenu.emit()" disableClose>
+    <mat-sidenav
+      #sidenav
+      [opened]="open"
+      (keydown.escape)="sidenav.close()"
+      (closedStart)="closeMenu.emit()"
+      disableClose
+    >
       <mat-nav-list>
         <ng-content></ng-content>
       </mat-nav-list>
@@ -14,8 +20,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       mat-sidenav {
         width: 300px;
       }
-    `,
-  ],
+    `
+  ]
 })
 export class SidenavComponent {
   @Input() open = false;

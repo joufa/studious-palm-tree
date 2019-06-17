@@ -5,12 +5,12 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./teams/teams.module').then(m => m.TeamsModule)
-  }
-  , { path: '', redirectTo: '/admin', pathMatch: 'full' }
+  },
+  { path: '', redirectTo: '/admin', pathMatch: 'full' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -14,8 +14,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
       .secondary {
         color: rgba(0, 0, 0, 0.54);
       }
-    `,
-  ],
+    `
+  ]
 })
 export class NavItemComponent {
   @Input() icon = '';

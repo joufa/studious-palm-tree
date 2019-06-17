@@ -22,7 +22,6 @@ import { Team, TeamDTO, TeamOperationType } from '../models/team';
   ]
 })
 export class AddTeamComponent implements OnInit {
-
   @Output() submitted = new EventEmitter<TeamDTO>();
 
   @Input() team: Team;
@@ -32,9 +31,7 @@ export class AddTeamComponent implements OnInit {
     memberCount: new FormControl('1'),
     desc: new FormControl('')
   });
-  constructor() {
-
-  }
+  constructor() {}
 
   ngOnInit() {
     if (this.team) {
@@ -57,14 +54,20 @@ export class AddTeamComponent implements OnInit {
     if (deleting) {
       type = TeamOperationType.DELETE;
     } else {
-      type = this.form.get('type').value === 0 ? TeamOperationType.CREATE : TeamOperationType.UPDATE;
+      type =
+        this.form.get('type').value === 0
+          ? TeamOperationType.CREATE
+          : TeamOperationType.UPDATE;
     }
     const desc = this.form.get('desc').value;
-    const members = +(this.form.get('memberCount').value);
-    return { operation: type,
+    const members = +this.form.get('memberCount').value;
+    return {
+      operation: type,
       teamId: this.team ? this.team.teamId : null,
       name: this.form.get('name').value,
-      memberCount: members, description: desc ? desc : null };
+      memberCount: members,
+      description: desc ? desc : null
+    };
   }
 
   delete() {
@@ -72,9 +75,7 @@ export class AddTeamComponent implements OnInit {
   }
   onSubmit() {
     if (this.form.valid) {
-
       this.submitted.emit(this.validate(false));
-
     }
   }
 }
