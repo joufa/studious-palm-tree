@@ -6,7 +6,6 @@ import static org.junit.Assert.fail;
 
 import fi.joufa.agileservices.exceptions.AgileException;
 import fi.joufa.domain.model.StatusFactory;
-import fi.joufa.domain.model.StatusHistoryTypes;
 import fi.joufa.domain.model.Team;
 import fi.joufa.domain.model.TeamBuilder;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
@@ -64,7 +63,7 @@ public class TeamServiceTest {
               .setName("Testi")
               .setMemberCount(6)
               .setDescription("Kuvausta")
-              .setStatusHistory(StatusFactory.create(StatusHistoryTypes.BOTH))
+              .setStatusHistory(StatusFactory.createHistory())
               .createTeam();
 
       final Team result = teamService.editTeam(newTeam);

@@ -46,7 +46,6 @@ public class TeamRepositoryImpl implements TeamRepositoryI {
 
   @Override
   public Team createTeam(Team team) {
-    System.out.println("creating a team: " + team);
     final TeamEntity teamEntity = domainToEntityMapper.teamToTeamEntity(team);
     return domainToEntityMapper.teamEntityToTeam(teamEntityRepository.save(teamEntity));
   }

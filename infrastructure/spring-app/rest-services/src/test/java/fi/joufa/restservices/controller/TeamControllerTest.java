@@ -12,7 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fi.joufa.agileservices.services.TeamService;
 import fi.joufa.domain.model.StatusFactory;
-import fi.joufa.domain.model.StatusHistoryTypes;
 import fi.joufa.domain.model.Team;
 import fi.joufa.domain.model.TeamBuilder;
 import fi.joufa.domain.model.common.TeamId;
@@ -80,7 +79,7 @@ public class TeamControllerTest {
         .setName(request.getName())
         .setDescription(request.getDescription())
         .setMemberCount(request.getMemberCount())
-        .setStatusHistory(StatusFactory.create(StatusHistoryTypes.BOTH))
+        .setStatusHistory(StatusFactory.createHistory())
         .createTeam();
   }
 }

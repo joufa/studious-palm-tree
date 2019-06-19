@@ -3,6 +3,11 @@ package fi.joufa.restservices.controller;
 import fi.joufa.domain.model.Team;
 
 public class DtoMapper {
+
+  private DtoMapper() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static TeamRequestDto toDto(Team team) {
     final TeamRequestDto dto = new TeamRequestDto();
     dto.setTeamId(team.getTeamId().getId());

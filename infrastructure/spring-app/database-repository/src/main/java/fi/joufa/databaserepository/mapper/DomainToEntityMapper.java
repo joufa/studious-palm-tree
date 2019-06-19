@@ -21,7 +21,7 @@ public class DomainToEntityMapper {
 
   public Team teamEntityToTeam(TeamEntity teamEntity) {
     return new TeamBuilder()
-        .setTeamId(new TeamId(Long.valueOf(teamEntity.getId())))
+        .setTeamId(new TeamId(teamEntity.getId()))
         .setName(teamEntity.getName())
         .setMemberCount(teamEntity.getMemberCount())
         .setDescription(teamEntity.getDescription())

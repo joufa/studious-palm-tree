@@ -3,7 +3,6 @@ package fi.joufa.agilelogic.services;
 import fi.joufa.agileservices.exceptions.AgileException;
 import fi.joufa.agileservices.services.TeamService;
 import fi.joufa.domain.model.StatusFactory;
-import fi.joufa.domain.model.StatusHistoryTypes;
 import fi.joufa.domain.model.Team;
 import fi.joufa.domain.model.TeamBuilder;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
@@ -33,7 +32,7 @@ public class TeamServiceImpl implements TeamService {
               .setName(team.getName())
               .setDescription(team.getDescription())
               .setMemberCount(team.getMemberCount())
-              .setStatusHistory(StatusFactory.create(StatusHistoryTypes.BOTH))
+              .setStatusHistory(StatusFactory.createHistory())
               .createTeam());
     } catch (Exception ex) {
       throw new AgileException("Team creation failed");

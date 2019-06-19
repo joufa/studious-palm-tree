@@ -2,12 +2,13 @@ package fi.joufa.agilelogic.services;
 
 import fi.joufa.agileservices.services.SurveyService;
 import fi.joufa.domain.model.Survey;
+import java.util.Collections;
 import java.util.List;
 
 public class SurveyServiceImpl implements SurveyService {
   @Override
   public List<Survey> findAll() {
-    return null;
+    return Collections.emptyList();
   }
 
   @Override

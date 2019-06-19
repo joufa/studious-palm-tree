@@ -1,7 +1,6 @@
 package fi.joufa.agilelogic.services;
 
 import fi.joufa.domain.model.StatusFactory;
-import fi.joufa.domain.model.StatusHistoryTypes;
 import fi.joufa.domain.model.Team;
 import fi.joufa.domain.model.TeamBuilder;
 import fi.joufa.domain.model.common.TeamId;
@@ -23,11 +22,7 @@ public class TeamRepositoryStub implements TeamRepositoryI {
 
   public static Team addTeam() {
     return new Team(
-        new TeamId(Long.valueOf(1)),
-        "Testi",
-        3,
-        "Testitiimi",
-        StatusFactory.create(StatusHistoryTypes.BOTH));
+        new TeamId(Long.valueOf(1)), "Testi", 3, "Testitiimi", StatusFactory.createHistory());
   }
 
   @Override

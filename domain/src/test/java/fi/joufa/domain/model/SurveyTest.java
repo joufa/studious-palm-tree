@@ -11,18 +11,13 @@ public class SurveyTest {
 
     @Before
     public void init() {
-        final StatusHistory sh = StatusFactory.create(StatusHistoryTypes.BOTH);
+        final StatusHistory sh = StatusFactory.createHistory();
         testTeam1 = new TeamBuilder().setName("Testitiimi").setMemberCount(3).setStatusHistory(sh).createTeam();
     }
     @Test
     public void surveyCanBeCreated() {
-        final Survey survey = new Survey(testTeam1);
+        final Survey survey = new Survey();
         assertNotNull(survey);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void surveyCannotBeCreatedWitNull() {
-        final Survey survey = new Survey(null);
     }
 
 }

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import fi.joufa.databaserepository.config.DatabaseConfiguration;
 import fi.joufa.databaserepository.mapper.DomainToEntityMapper;
+import fi.joufa.databaserepository.model.TeamEntity;
 import fi.joufa.domain.model.StatusHistory;
 import fi.joufa.domain.model.Team;
 import fi.joufa.domain.model.TeamBuilder;
@@ -45,7 +46,8 @@ public class TeamEntityRepositoryTest {
             .setName("Nakki")
             .setStatusHistory(new StatusHistory(LocalDateTime.now(), (LocalDateTime.now())))
             .createTeam();
-    teamEntityRepository.save(dem.teamToTeamEntity(team));
+    final TeamEntity saved = teamEntityRepository.save(dem.teamToTeamEntity(team));
+    assertNotNull(saved);
   }
 
   @Test
