@@ -1,6 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 import { Team, TeamDTO } from '../models/team';
-import { Update } from '@ngrx/entity';
 
 export const loadTeams = createAction('[Team] Load teams');
 

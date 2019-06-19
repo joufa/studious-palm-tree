@@ -16,9 +16,14 @@ export class TeamEffects {
       switchMap(() =>
         this.service
           .getTeams()
-          .pipe(map((teams: Team[]) => TeamActions.loadTeamsSuccess({ teams })))
+          .pipe(
+            map((teams: Team[]) =>
+            TeamActions.loadTeamsSuccess({ teams }),
+          ),
+          catchError(() => of(TeamActions.teamFailure))
       )
-    )
+      )
+      )
   );
 
   createTeam$ = createEffect(() =>

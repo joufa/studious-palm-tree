@@ -2,10 +2,12 @@ package fi.joufa.agilelogic.services;
 
 import fi.joufa.agileservices.exceptions.AgileException;
 import fi.joufa.agileservices.services.TeamService;
+import fi.joufa.domain.model.StatusFactory;
+import fi.joufa.domain.model.StatusHistoryTypes;
 import fi.joufa.domain.model.Team;
+import fi.joufa.domain.model.TeamBuilder;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
 import java.security.InvalidParameterException;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -23,17 +25,17 @@ public class TeamServiceImpl implements TeamService {
   @Override
   public Team createTeam(Team team) throws AgileException {
     try {
-      final Team teamToCreate =
-          new Team(
-              null,
-              team.getName(),
-              team.getMemberCount(),
-              team.getDescription(),
-              LocalDateTime.now(),
-              LocalDateTime.now());
-      return teamRepository.createTeam(teamToCreate);
+      if (team.getName() == null) {
+        throw new IllegalArgumentException();
+      }
+      return teamRepository.createTeam(
+          new TeamBuilder()
+              .setName(team.getName())
+              .setDescription(team.getDescription())
+              .setMemberCount(team.getMemberCount())
+              .setStatusHistory(StatusFactory.create(StatusHistoryTypes.BOTH))
+              .createTeam());
     } catch (Exception ex) {
-
       throw new AgileException("Team creation failed");
     }
   }
@@ -41,41 +43,49 @@ public class TeamServiceImpl implements TeamService {
   @Override
   public Team editTeam(Team team) throws AgileException {
     try {
-      final Team found = teamRepository.findTeamById(team.getTeamId());
+      final Team found = teamRepository.findTeamByName(team.getName());
       if (found == null) {
         throw new InvalidParameterException();
       }
 
-      final String name = team.getName() != null ? team.getName() : found.getName();
       final Integer memberCount =
           team.getMemberCount() != null ? team.getMemberCount() : found.getMemberCount();
       final String desc =
           team.getDescription() != null ? team.getDescription() : found.getDescription();
 
-      return teamRepository.updateTeam(
-          new Team(
-              team.getTeamId(), name, memberCount, desc, team.getCreatedAt(), LocalDateTime.now()));
+      final Team teamToUpdate =
+          new TeamBuilder()
+              .setTeamId(team.getTeamId())
+              .setName(team.getName())
+              .setMemberCount(memberCount)
+              .setDescription(desc)
+              .setStatusHistory(StatusFactory.update(team.getStatusHistory()))
+              .createTeam();
+      return teamRepository.updateTeam(teamToUpdate);
     } catch (Exception ex) {
-      throw new AgileException("Team update failed");
+      throw new AgileException("Team update failed: " + ex.getMessage());
     }
   }
 
   @Override
-  public Team deleteTeam(Long teamId) throws AgileException {
-    if (teamId == null) {
-      throw new AgileException("Team ID is empty");
-    }
-    final Team existingTeam = teamRepository.findTeamById(teamId);
-    if (existingTeam == null) {
+  public Team deleteTeam(Team team) throws AgileException {
+
+    final Team found = teamRepository.findTeamByName(team.getName());
+
+    if (found == null) {
       throw new AgileException("Team not found");
     }
-    return teamRepository.deleteTeam(existingTeam);
+
+    return teamRepository.deleteTeam(found);
   }
 
   @Override
-  public Optional<Team> findTeamById(Long teamId) {
-    final Team team = teamRepository.findTeamById(teamId);
-    return team != null ? Optional.of(team) : Optional.empty();
+  public Optional<Team> findTeamByName(String team) {
+    final Team found = teamRepository.findTeamByName(team);
+    if (found != null) {
+      return Optional.of(found);
+    }
+    return Optional.empty();
   }
 
   @Override

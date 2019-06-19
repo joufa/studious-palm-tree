@@ -1,16 +1,16 @@
 package fi.joufa.domain.model;
 
-import java.time.LocalDateTime;
+
+import fi.joufa.domain.model.common.TeamId;
 
 public class TeamBuilder {
-    private Long teamId;
+    private TeamId teamId;
     private String name;
     private Integer memberCount;
     private String description;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private StatusHistory statusHistory;
 
-    public TeamBuilder setTeamId(Long teamId) {
+    public TeamBuilder setTeamId(TeamId teamId) {
         this.teamId = teamId;
         return this;
     }
@@ -30,17 +30,12 @@ public class TeamBuilder {
         return this;
     }
 
-    public TeamBuilder setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public TeamBuilder setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public TeamBuilder setStatusHistory(StatusHistory statusHistory) {
+        this.statusHistory = statusHistory;
         return this;
     }
 
     public Team createTeam() {
-        return new Team(teamId, name, memberCount, description, createdAt, updatedAt);
+        return new Team(teamId, name, memberCount, description, statusHistory);
     }
 }

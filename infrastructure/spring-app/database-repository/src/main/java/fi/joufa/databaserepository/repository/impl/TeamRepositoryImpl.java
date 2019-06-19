@@ -6,7 +6,6 @@ import fi.joufa.databaserepository.repository.TeamEntityRepository;
 import fi.joufa.domain.model.Team;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -29,15 +28,6 @@ public class TeamRepositoryImpl implements TeamRepositoryI {
   }
 
   @Override
-  public Team findTeamById(Long teamId) {
-    Optional<TeamEntity> teamEntity = teamEntityRepository.findById(teamId);
-    if (teamEntity.isPresent()) {
-      return domainToEntityMapper.teamEntityToTeam(teamEntity.get());
-    }
-    return null;
-  }
-
-  @Override
   public Team findTeamByName(String name) {
     final TeamEntity teamEntity = teamEntityRepository.findTeamEntityByName(name);
     if (teamEntity != null) {
@@ -56,6 +46,7 @@ public class TeamRepositoryImpl implements TeamRepositoryI {
 
   @Override
   public Team createTeam(Team team) {
+    System.out.println("creating a team: " + team);
     final TeamEntity teamEntity = domainToEntityMapper.teamToTeamEntity(team);
     return domainToEntityMapper.teamEntityToTeam(teamEntityRepository.save(teamEntity));
   }
@@ -63,11 +54,8 @@ public class TeamRepositoryImpl implements TeamRepositoryI {
   @Override
   public Team updateTeam(Team team) {
     LOGGER.log(Level.FINER, "updating team {0} ", team);
-    final TeamEntity teamToUpdate = teamEntityRepository.getOne(team.getTeamId());
-    teamToUpdate.setName(team.getName());
-    teamToUpdate.setMemberCount(team.getMemberCount());
-    teamToUpdate.setDescription(team.getDescription());
-    return domainToEntityMapper.teamEntityToTeam(teamEntityRepository.save(teamToUpdate));
+    final TeamEntity te = domainToEntityMapper.teamToTeamEntity(team);
+    return domainToEntityMapper.teamEntityToTeam(teamEntityRepository.save(te));
   }
 
   @Override

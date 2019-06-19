@@ -8,8 +8,8 @@ import javax.persistence.*;
 public class TeamEntity {
 
   @Id
-  @Column(name = "team_id")
   @GeneratedValue
+  @Column(name = "id", updatable = false, nullable = false)
   private Long id;
 
   @Column(unique = true)
@@ -22,12 +22,12 @@ public class TeamEntity {
   @Column private Date createdAt;
   @Column private Date updatedAt;
 
-  public Long getId() {
-    return id;
-  }
-
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Long getId() {
+    return id;
   }
 
   public String getName() {

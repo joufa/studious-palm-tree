@@ -34,6 +34,7 @@ export class AddTeamComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    console.log(this.team);
     if (this.team) {
       this.form = new FormGroup({
         type: new FormControl('1'),
@@ -55,7 +56,7 @@ export class AddTeamComponent implements OnInit {
       type = TeamOperationType.DELETE;
     } else {
       type =
-        this.form.get('type').value === 0
+        this.form.get('type').value === '0'
           ? TeamOperationType.CREATE
           : TeamOperationType.UPDATE;
     }

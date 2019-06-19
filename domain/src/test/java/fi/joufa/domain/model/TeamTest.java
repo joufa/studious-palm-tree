@@ -1,5 +1,6 @@
 package fi.joufa.domain.model;
 
+import fi.joufa.domain.model.common.TeamId;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -13,16 +14,16 @@ import static org.junit.Assert.*;
 public class TeamTest {
 
     @Test
-    public void team_shouldInitialize() {
-        final Team team = new TeamBuilder()
-                .setName("Karhukopla")
-                .setMemberCount(3).
-                        setDescription("Kiva tiimi")
-                .setTeamId(Long.valueOf(1))
-                        .setCreatedAt(LocalDateTime.now())
-                .setUpdatedAt(LocalDateTime.now())
-                        .createTeam();
-        assertEquals("Karhukopla", team.getName());
+    public void team_equality() {
+        final Team firstTeam = new TeamBuilder().setTeamId(new TeamId(Long.valueOf(1))).setName("Mulq").setMemberCount(3).createTeam();
+        final Team secondTeam = new TeamBuilder().setTeamId(new TeamId(Long.valueOf(1))).setName("Dest").setMemberCount(3).createTeam();
+        final Team thirdTeam = new TeamBuilder().setTeamId(new TeamId(Long.valueOf(2))).setName("Test").setMemberCount(3).createTeam();
+        final Team fourthTeam = new TeamBuilder().setTeamId(new TeamId(Long.valueOf(3))).setName("Mulq").setMemberCount(3).createTeam();
+
+        assertNotEquals(firstTeam, secondTeam);
+        assertNotEquals(firstTeam, thirdTeam);
+        assertEquals(firstTeam, firstTeam);
+        assertNotEquals(firstTeam, fourthTeam);
     }
 
 }

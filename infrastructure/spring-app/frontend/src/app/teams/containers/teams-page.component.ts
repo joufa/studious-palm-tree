@@ -52,7 +52,7 @@ export class TeamsPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(loadTeams);
+    this.store.dispatch(loadTeams());
   }
 
   navigate(event: any) {
