@@ -54,11 +54,11 @@ public class TeamServiceImpl implements TeamService {
 
       final Team teamToUpdate =
           new TeamBuilder()
-              .setTeamId(team.getTeamId())
-              .setName(team.getName())
+              .setTeamId(found.getTeamId())
+              .setName(found.getName())
               .setMemberCount(memberCount)
               .setDescription(desc)
-              .setStatusHistory(StatusFactory.update(team.getStatusHistory()))
+              .setStatusHistory(StatusFactory.update(found.getStatusHistory()))
               .createTeam();
       return teamRepository.updateTeam(teamToUpdate);
     } catch (Exception ex) {

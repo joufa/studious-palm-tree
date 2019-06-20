@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.*;
 
 import fi.joufa.databaserepository.config.DatabaseConfiguration;
+import fi.joufa.databaserepository.config.DateFactory;
 import fi.joufa.databaserepository.mapper.DomainToEntityMapper;
 import fi.joufa.databaserepository.model.TeamEntity;
 import fi.joufa.domain.model.StatusHistory;
@@ -28,7 +29,7 @@ public class TeamEntityRepositoryTest {
 
   @Autowired private EntityManager entityManager;
   @Autowired private TeamEntityRepository teamEntityRepository;
-  private DomainToEntityMapper dem = new DomainToEntityMapper();
+  private DomainToEntityMapper dem = new DomainToEntityMapper(new DateFactory());
 
   @Before
   public void init() {}

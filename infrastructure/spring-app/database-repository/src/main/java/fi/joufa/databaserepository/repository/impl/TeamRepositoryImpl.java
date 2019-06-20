@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 
-/** @author udanre */
 public class TeamRepositoryImpl implements TeamRepositoryI {
 
   private static final Logger LOGGER = Logger.getLogger(TeamRepositoryImpl.class.getName());
