@@ -5,7 +5,9 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.fail;
 
 import fi.joufa.agileservices.exceptions.AgileException;
+import fi.joufa.domain.model.StatusFactory;
 import fi.joufa.domain.model.Team;
+import fi.joufa.domain.model.TeamBuilder;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
 import java.util.List;
 import java.util.Optional;
@@ -25,31 +27,50 @@ public class TeamServiceTest {
 
   @Test
   public void findTeam_returnsTeam_success() {
-    final Team team = teamService.findTeamById(Long.valueOf(1)).get();
-    assertThat(team.getTeamId()).isEqualTo(Long.valueOf(1));
+    final Optional<Team> team = teamService.findTeamByName("Testi");
+    assertThat(team.isPresent()).isEqualTo(true);
   }
 
   @Test
   public void findTeam_returnsTeam_notFound() {
-    final Optional<Team> team = teamService.findTeamById(Long.valueOf(2));
-    assertThat(team).isEqualTo(Optional.empty());
+    final Optional<Team> team = teamService.findTeamByName("Testi kakkonen");
+    assertThat(team.isPresent()).isEqualTo(false);
   }
 
   @Test
   public void createNewTeam_success() {
-    final Team team = new Team(null, "Kissalan pojat", 3, "Kissalan tiimi");
+    final Team team =
+        new TeamBuilder()
+            .setName("Kissalan pojat")
+            .setMemberCount(3)
+            .setDescription("Kissalan tiimi")
+            .createTeam();
     final Team createdTeam = teamRepository.createTeam(team);
-    assertThat(createdTeam.getTeamId()).isNotNull();
+    assertThat(createdTeam.getName()).isEqualTo("Kissalan pojat");
   }
 
   @Test
   public void editTeam_updatesTeamData() {
     try {
-      final Optional<Team> team = teamService.findTeamById(Long.valueOf(1));
-      final Team newTeam = new Team(team.get().getTeamId(), "Uusi nimi", 6, "Uusi kuvaus");
-      final Team updatedTeam = teamService.editTeam(newTeam);
-      assertThat(updatedTeam.getTeamId()).isEqualTo(Long.valueOf(1));
-      assertThat(updatedTeam.getName()).isEqualTo("Uusi nimi");
+      final Integer baseSize = teamRepository.findAll().size();
+      final Optional<Team> existingTeam = teamService.findTeamByName("Testi");
+      if (!existingTeam.isPresent()) {
+        fail();
+      }
+      final Team newTeam =
+          new TeamBuilder()
+              .setTeamId(existingTeam.get().getTeamId())
+              .setName("Testi")
+              .setMemberCount(6)
+              .setDescription("Kuvausta")
+              .setStatusHistory(StatusFactory.createHistory())
+              .createTeam();
+
+      final Team result = teamService.editTeam(newTeam);
+
+      final Integer afterSize = teamRepository.findAll().size();
+      assertThat(afterSize).isEqualTo(baseSize);
+      assertThat(result.getDescription()).isEqualTo("Kuvausta");
     } catch (AgileException e) {
       fail(String.format("Error in updating a team: %s", e.getMessage()));
     }
@@ -58,8 +79,9 @@ public class TeamServiceTest {
   @Test
   public void deleteTeam_deletesTeam() {
     try {
-      final Team deletedTeam = teamService.deleteTeam(Long.valueOf(1));
-      assertThat(deletedTeam.getTeamId()).isEqualTo(Long.valueOf(1));
+      final Team deletedTeam =
+          teamService.deleteTeam(new TeamBuilder().setName("Testi").createTeam());
+      assertThat(deletedTeam.getName()).isEqualTo("Testi");
       assertThat(teamService.findAll()).isEmpty();
     } catch (AgileException e) {
       fail(String.format("Error in deleting a team: %s", e.getMessage()));

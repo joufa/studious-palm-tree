@@ -1,5 +1,6 @@
 package fi.joufa.databaserepository.model;
 
+import java.util.Date;
 import javax.persistence.*;
 
 @Entity
@@ -7,8 +8,8 @@ import javax.persistence.*;
 public class TeamEntity {
 
   @Id
-  @Column(name = "team_id")
   @GeneratedValue
+  @Column(name = "id", updatable = false, nullable = false)
   private Long id;
 
   @Column(unique = true)
@@ -18,12 +19,15 @@ public class TeamEntity {
 
   @Column private String description;
 
-  public Long getId() {
-    return id;
-  }
+  @Column private Date createdAt;
+  @Column private Date updatedAt;
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public Long getId() {
+    return id;
   }
 
   public String getName() {
@@ -48,5 +52,21 @@ public class TeamEntity {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Date getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(Date updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }

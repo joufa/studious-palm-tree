@@ -1,16 +1,25 @@
-import { Action, combineReducers, createFeatureSelector, createSelector } from '@ngrx/store';
-import * as fromRoot from '../../store/reducers';
-import * as fromTeams from './teams.reducer';
+// Feature reducer
 
+import {
+  Action,
+  combineReducers,
+  createFeatureSelector,
+  createSelector
+} from '@ngrx/store';
+import * as fromRoot from '../../core/core.state';
+import * as fromTeams from './teams.reducer';
+import { Team } from '../models/team';
 
 export interface TeamsState {
-    teams: fromTeams.State;
+  teams: fromTeams.State;
 }
 
 export interface State extends fromRoot.State {
-    teams: TeamsState;
+  teams: TeamsState;
 }
-export function reducers(state: TeamsState | undefined, action: Action) {
+
+// AOT friendly
+export function reducers(state: TeamsState | undefined, action: Action) {
   return combineReducers({
     teams: fromTeams.reducer
   })(state, action);
@@ -18,28 +27,26 @@ export function reducers(state: TeamsState | undefined, action: Action) {
 
 export const getTeamsState = createFeatureSelector<State, TeamsState>('teams');
 
-
 export const getTeamEntitiesState = createSelector(
-    getTeamsState,
-    state => state.teams
+  getTeamsState,
+  state => state.teams
 );
-
 export const getSelectedTeamId = createSelector(
-    getTeamEntitiesState,
-    fromTeams.getSelectedId
+  getTeamEntitiesState,
+  fromTeams.getSelectedTeamId
 );
 
 export const {
-    selectIds: getTeamsIds,
-    selectEntities: getTeamEntities,
-    selectAll: getAllTeams,
-    selectTotal: getTotalTeams,
+  selectIds: getTeamIds,
+  selectEntities: getTeamEntities,
+  selectAll: getAllTeams,
+  selectTotal: getTotalTeams
 } = fromTeams.adapter.getSelectors(getTeamEntitiesState);
 
 export const getSelectedTeam = createSelector(
-    getTeamEntities,
-    getSelectedTeamId,
-    (entities, selectedId) => {
-        return selectedId && entities[selectedId];
-    }
+  getTeamEntities,
+  getSelectedTeamId,
+  (entities, selectedId) => {
+    return selectedId && entities[selectedId];
+  }
 );

@@ -5,6 +5,7 @@
  */
 package fi.joufa.spring.configuration;
 
+import fi.joufa.databaserepository.config.DateFactory;
 import fi.joufa.databaserepository.mapper.DomainToEntityMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,11 @@ import org.springframework.context.annotation.Configuration;
 public class MapperFactory {
   @Bean
   public DomainToEntityMapper domainToEntityMapper() {
-    return new DomainToEntityMapper();
+    return new DomainToEntityMapper(new DateFactory());
+  }
+
+  @Bean
+  public DateFactory dateFactory() {
+    return new DateFactory();
   }
 }

@@ -4,7 +4,6 @@ import fi.joufa.domain.model.Team;
 import java.util.List;
 
 public interface TeamRepositoryI {
-    Team findTeamById(Long teamId);
     Team findTeamByName(String name);
     List<Team> findAll();
     Team createTeam(Team team);

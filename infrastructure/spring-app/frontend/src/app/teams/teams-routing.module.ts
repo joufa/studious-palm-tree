@@ -8,7 +8,8 @@ const routes: Routes = [
     path: '',
     component: TeamsPageComponent
   },
-  { path: 'new', component: AddTeamsPageComponent }
+  { path: 'team', component: AddTeamsPageComponent },
+  { path: 'team/:id', component: AddTeamsPageComponent }
 ];
 
 @NgModule({

@@ -1,15 +1,19 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Team } from '../models/team';
-import { TeamActions } from '../actions';
+import { createEntityAdapter, EntityAdapter, EntityState, Update } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
+import { TeamActions } from '../actions';
+import { Team } from '../models/team';
 
 export interface State extends EntityState<Team> {
   selectedTeamId: string | null;
 }
 
+export function sortByName(a: Team, b: Team): number {
+  return a.name.localeCompare(b.name);
+}
+
 export const adapter: EntityAdapter<Team> = createEntityAdapter<Team>({
   selectId: (team: Team) => team.teamId,
-  sortComparer: false
+  sortComparer: sortByName
 });
 
 export const initialState: State = adapter.getInitialState({
@@ -23,7 +27,30 @@ export const reducer = createReducer(
   ),
   on(TeamActions.createTeamSuccess, (state, { team }) =>
     adapter.addOne(team, state)
-  )
+  ),
+  on(TeamActions.updateTeamSuccess, (state, { team }) =>
+    adapter.updateOne(generateUpdate(team), state)
+  ),
+  on(TeamActions.deleteTeamSuccess, (state, { team }) =>
+    adapter.removeOne(team.teamId, state)
+  ),
+  on(TeamActions.selectTeam, (state, { teamId }) => ({
+    ...state,
+    selectedTeamId: teamId
+  }))
 );
 
-export const getSelectedId = (state: State) => state.selectedTeamId;
+function generateUpdate(team: Team): Update<Team> {
+  return {
+    id: team.teamId,
+    changes: {
+      name: team.name,
+      memberCount: team.memberCount,
+      description: team.description,
+      createdAt: team.createdAt,
+      updatedAt: team.updatedAt
+    }
+  };
+}
+
+export const getSelectedTeamId = (state: State) => state.selectedTeamId;

@@ -6,6 +6,7 @@ import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { TeamsApiService } from '../../core/services/teams.service';
 import { TeamActions } from '../actions';
 import { Team } from '../models/team';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class TeamEffects {
@@ -15,9 +16,14 @@ export class TeamEffects {
       switchMap(() =>
         this.service
           .getTeams()
-          .pipe(map((teams: Team[]) => TeamActions.loadTeamsSuccess({ teams })))
+          .pipe(
+            map((teams: Team[]) =>
+            TeamActions.loadTeamsSuccess({ teams }),
+          ),
+          catchError(() => of(TeamActions.teamFailure))
       )
-    )
+      )
+      )
   );
 
   createTeam$ = createEffect(() =>
@@ -25,19 +31,75 @@ export class TeamEffects {
       ofType(TeamActions.createTeam.type),
       mergeMap(({ team }) =>
         this.service.createTeam(team).pipe(
-          map((createdTeam: Team) => TeamActions.createTeamSuccess({ team: createdTeam })),
+          map((createdTeam: Team) =>
+            TeamActions.createTeamSuccess({ team: createdTeam })
+          ),
           catchError(() => of(TeamActions.teamFailure))
         )
       )
     )
   );
 
-  createTeamSuccess$ = createEffect(() =>
-          this.actions$.pipe(
-            ofType(TeamActions.createTeamSuccess.type),
-            tap(() => this.router.navigate(['admin']))),
-          {dispatch: false}
+  updateTeam$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TeamActions.updateTeam.type),
+      switchMap(({ team }) =>
+        this.service.updateTeam(team).pipe(
+          map((updatedTeam: Team) =>
+            TeamActions.updateTeamSuccess({ team: updatedTeam })
+          ),
+          catchError((error: HttpErrorResponse) =>
+            of(TeamActions.teamFailure({ error }))
+          )
+        )
+      )
+    )
   );
 
-  constructor(private actions$: Actions, private service: TeamsApiService, private router: Router) {}
+  deleteTeam$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TeamActions.deleteTeam.type),
+      mergeMap(({ team }) =>
+        this.service.deleteTeam(team).pipe(
+          map((deletedTeam: Team) =>
+            TeamActions.deleteTeamSuccess({ team: deletedTeam })
+          ),
+          catchError(() => of(TeamActions.teamFailure))
+        )
+      )
+    )
+  );
+
+  updateTeamSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TeamActions.updateTeamSuccess.type),
+        tap(() => this.router.navigate(['admin']))
+      ),
+    { dispatch: false }
+  );
+
+  createTeamSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TeamActions.createTeamSuccess.type),
+        tap(() => this.router.navigate(['admin']))
+      ),
+    { dispatch: false }
+  );
+
+  deleteTeamSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TeamActions.deleteTeamSuccess.type),
+        tap(() => this.router.navigate(['admin']))
+      ),
+    { dispatch: false }
+  );
+
+  constructor(
+    private actions$: Actions,
+    private service: TeamsApiService,
+    private router: Router
+  ) {}
 }

@@ -1,6 +1,9 @@
 package fi.joufa.agilelogic.services;
 
+import fi.joufa.domain.model.StatusFactory;
 import fi.joufa.domain.model.Team;
+import fi.joufa.domain.model.TeamBuilder;
+import fi.joufa.domain.model.common.TeamId;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +13,7 @@ import java.util.stream.Collectors;
 public class TeamRepositoryStub implements TeamRepositoryI {
 
   private final List<Team> teams;
-  private final Integer idSequence = 1;
+  private Integer sequence = 1;
 
   public TeamRepositoryStub(Team... teams) {
     this.teams = new ArrayList();
@@ -18,12 +21,8 @@ public class TeamRepositoryStub implements TeamRepositoryI {
   }
 
   public static Team addTeam() {
-    return new Team(Long.valueOf(1), "Testi", 3, "Testitiimi");
-  }
-
-  @Override
-  public Team findTeamById(Long id) {
-    return teams.stream().filter(team -> team.getTeamId().equals(id)).findFirst().orElse(null);
+    return new Team(
+        new TeamId(Long.valueOf(1)), "Testi", 3, "Testitiimi", StatusFactory.createHistory());
   }
 
   @Override
@@ -33,22 +32,25 @@ public class TeamRepositoryStub implements TeamRepositoryI {
 
   @Override
   public Team createTeam(Team team) {
-    final Team addedTeam =
-        new Team(
-            Long.valueOf(idSequence + 1),
-            team.getName(),
-            team.getMemberCount(),
-            team.getDescription());
-    teams.add(addedTeam);
-    return addedTeam;
+    final Team teamToAdd =
+        new TeamBuilder()
+            .setTeamId(new TeamId(Long.valueOf(sequence + 1)))
+            .setName(team.getName())
+            .setMemberCount(team.getMemberCount())
+            .setDescription(team.getDescription())
+            .createTeam();
+    if (!this.teams.contains(teamToAdd)) {
+      this.teams.add(teamToAdd);
+    } else {
+      return null;
+    }
+    return teamToAdd;
   }
 
   @Override
   public Team updateTeam(Team team) {
     List<Team> tmp =
-        teams.stream()
-            .filter(teamInList -> !teamInList.getTeamId().equals(team.getTeamId()))
-            .collect(Collectors.toList());
+        teams.stream().filter(teamInList -> !teamInList.equals(team)).collect(Collectors.toList());
     teams.clear();
     teams.addAll(tmp);
     teams.add(team);
@@ -58,9 +60,7 @@ public class TeamRepositoryStub implements TeamRepositoryI {
   @Override
   public Team deleteTeam(Team team) {
     List<Team> tmp =
-        teams.stream()
-            .filter(teamInList -> !teamInList.getTeamId().equals(team.getTeamId()))
-            .collect(Collectors.toList());
+        teams.stream().filter(teamInList -> !teamInList.equals(team)).collect(Collectors.toList());
     teams.clear();
     teams.addAll(tmp);
     return team;
