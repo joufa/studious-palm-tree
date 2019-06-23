@@ -11,17 +11,18 @@ import static org.junit.Assert.*;
 
 public class SurveyTest {
 
+    private static final String NAME = "Test";
     Survey survey;
 
     @Test
     public void survey_CanBeCreated() {
-        survey = SurveyFactory.createNew();
+        survey = SurveyFactory.createNew(NAME);
         assertNotNull(survey);
     }
 
     @Test
     public void survey_addTeams_canAddValidTeam() {
-        survey = SurveyFactory.createNew();
+        survey = SurveyFactory.createNew(NAME);
         final Team team = new TeamBuilder().setTeamId(new TeamId(Long.valueOf(1))).setName("Testi").createTeam();
         survey.addTeam(team.getTeamId());
         final Set<TeamId> teams = survey.getTeams();
@@ -30,7 +31,7 @@ public class SurveyTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void survey_addTeams_cannotAddEmptyTeamReference() {
-        survey = SurveyFactory.createNew();
+        survey = SurveyFactory.createNew(NAME);
         final Team team = new TeamBuilder().setName("Testi").createTeam();
         // Is null
         survey.addTeam(team.getTeamId());
@@ -38,7 +39,7 @@ public class SurveyTest {
 
     @Test(expected = IllegalStateException.class)
     public void survey_addTeams_teamCanBeAddedOnlyOnce() {
-        final Survey survey = SurveyFactory.createNew();
+        final Survey survey = SurveyFactory.createNew(NAME);
         final Team team = new TeamBuilder().setTeamId(new TeamId(Long.valueOf(1))).setName("Testi").createTeam();
         survey.addTeam(team.getTeamId());
         survey.addTeam(team.getTeamId());
@@ -46,7 +47,7 @@ public class SurveyTest {
 
     @Test
     public void survey_addQuestionSet_canBeAddedOnce() {
-        survey = SurveyFactory.createNew();
+        survey = SurveyFactory.createNew(NAME);
         final QuestionSet qs = QuestionSet.create(null, "Setti");
         qs.addQuestion(1, new Question("fish?"));
         qs.addQuestion(2, new Question("more fish?"));
@@ -56,7 +57,7 @@ public class SurveyTest {
 
     @Test
     public void survey_build_returnsValidSurvey() {
-        survey = SurveyFactory.createNew();
+        survey = SurveyFactory.createNew(NAME);
 
     }
 

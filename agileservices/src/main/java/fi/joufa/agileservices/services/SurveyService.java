@@ -1,6 +1,8 @@
 package fi.joufa.agileservices.services;
 
 import fi.joufa.agileservices.exceptions.AgileException;
+import fi.joufa.domain.model.Question;
+import fi.joufa.domain.model.QuestionSet;
 import fi.joufa.domain.model.Survey;
 import fi.joufa.domain.model.common.SurveyId;
 
@@ -13,6 +15,8 @@ public interface SurveyService {
     List<Survey> findOpen();
 
     Survey update(Survey survey);
+
+    Survey update(SurveyId surveyId, QuestionSet qs) throws AgileException;
 
     Survey create(String name) throws AgileException;
 

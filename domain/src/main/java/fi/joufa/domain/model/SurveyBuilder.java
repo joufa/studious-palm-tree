@@ -8,6 +8,7 @@ import java.util.Set;
 
 public class SurveyBuilder {
     private SurveyId surveyId;
+    private String name;
     private Set<TeamId> teams;
     private Map<Integer, QuestionSet> questionSet;
     private StatusHistory statusHistory;
@@ -15,6 +16,11 @@ public class SurveyBuilder {
 
     public SurveyBuilder setSurveyId(SurveyId surveyId) {
         this.surveyId = surveyId;
+        return this;
+    }
+
+    public SurveyBuilder setName(String name) {
+        this.name = name;
         return this;
     }
 
@@ -39,6 +45,6 @@ public class SurveyBuilder {
     }
 
     public Survey createSurvey() {
-        return new Survey(surveyId, teams, questionSet, statusHistory, status);
+        return new Survey(surveyId, name, teams, questionSet, statusHistory, status);
     }
 }

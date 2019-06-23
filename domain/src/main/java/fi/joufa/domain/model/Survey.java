@@ -14,14 +14,16 @@ import java.util.Set;
  */
 public class Survey {
     private SurveyId surveyId;
+    private String name;
     private Set<TeamId> teams;
     private Map<Integer, QuestionSet> questionSet;
     private StatusHistory statusHistory;
     private SurveyStatus status;
 
 
-    public Survey(SurveyId surveyId, Set<TeamId> teams, Map<Integer, QuestionSet> questionSet, StatusHistory statusHistory, SurveyStatus status) {
+    public Survey(SurveyId surveyId, String name, Set<TeamId> teams, Map<Integer, QuestionSet> questionSet, StatusHistory statusHistory, SurveyStatus status) {
         this.surveyId = surveyId;
+        this.name = name;
         this.teams = teams;
         this.questionSet = questionSet;
         this.statusHistory = statusHistory;
@@ -50,20 +52,25 @@ public class Survey {
             this.questionSet = new HashMap<>();
         }
         if (position == null) {
-            // throw
-            return;
+            throw new IllegalArgumentException("Position cannot be null");
         }
         if (!validateQuestionSet(questionSet)) {
-            // throw
-            return;
+            throw new IllegalArgumentException("QuestionSet is invalid");
         }
         if (this.questionSet.containsKey(position)) {
-            // throw
-            return;
+            throw new IllegalArgumentException("QuestionSet is already present");
         }
 
         this.questionSet.put(position, questionSet);
 
+    }
+
+    public Map<Integer, QuestionSet> getQuestionSet() {
+        return questionSet;
+    }
+
+    public SurveyStatus getStatus() {
+        return status;
     }
 
     private boolean validateQuestionSet(QuestionSet questionSet) {
@@ -75,21 +82,22 @@ public class Survey {
 
     }
 
-    public void addQuestionToSet(Question question, QuestionSet questionSet) {
-    }
-
     public void open() {
         if (this.validate()) {
             this.status = new SurveyStatus(LocalDateTime.now(), null);
+        } else {
+            throw new IllegalStateException("Survey cannot be opened");
         }
     }
 
-    // A survey must contain:
-    // - at least one team
     private boolean validate() {
-        // validate survey, is it ready
-        // A survey
-        return false;
+        if (this.teams == null ||this.teams.size() < 1) {
+            return false;
+        }
+        if (this.questionSet == null ||this.questionSet.size()< 1) {
+            return false;
+        }
+        return true;
     }
 
     public SurveyId getSurveyId() {
@@ -102,6 +110,10 @@ public class Survey {
 
     public StatusHistory getStatusHistory() {
         return statusHistory;
+    }
+
+    public String getName() {
+        return name;
     }
 
     /**

@@ -11,8 +11,11 @@ public class SurveyFactory {
         throw new IllegalStateException("Utility class");
     }
 
-    public static Survey createNew() {
-        return new SurveyBuilder().setSurveyId(null).setTeams(new HashSet<TeamId>()).setQuestionSet(new HashMap<Integer, QuestionSet>()).setStatusHistory(StatusFactory.createHistory()).setStatus(SurveyStatus.createInitial()).createSurvey();
+    public static Survey createNew(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Name cannot be null");
+        }
+        return new SurveyBuilder().setSurveyId(null).setName(name).setTeams(new HashSet<TeamId>()).setQuestionSet(new HashMap<Integer, QuestionSet>()).setStatusHistory(StatusFactory.createHistory()).setStatus(SurveyStatus.createInitial()).createSurvey();
     }
 
 

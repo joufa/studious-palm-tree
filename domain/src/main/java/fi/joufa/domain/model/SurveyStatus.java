@@ -32,6 +32,9 @@ public class SurveyStatus {
         this.archived = true;
     }
 
+    public boolean isArchived() {
+        return archived;
+    }
 
     public void reOpen() {
         if (this.isClosed()) {

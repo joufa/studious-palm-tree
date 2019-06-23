@@ -2,15 +2,26 @@ package fi.joufa.agilelogic.services;
 
 import fi.joufa.agileservices.exceptions.AgileException;
 import fi.joufa.agileservices.services.SurveyService;
+import fi.joufa.domain.model.QuestionSet;
 import fi.joufa.domain.model.Survey;
 import fi.joufa.domain.model.SurveyFactory;
 import fi.joufa.domain.model.common.SurveyId;
+import fi.joufa.repositoryinterface.SurveyRepositoryI;
 import java.util.List;
+import javax.inject.Inject;
 
 public class SurveyServiceImpl implements SurveyService {
+
+  private final SurveyRepositoryI surveyRepository;
+
+  @Inject
+  public SurveyServiceImpl(SurveyRepositoryI surveyRepository) {
+    this.surveyRepository = surveyRepository;
+  }
+
   @Override
   public List<Survey> findAll() {
-    return null;
+    return surveyRepository.findAll();
   }
 
   /**
@@ -24,7 +35,8 @@ public class SurveyServiceImpl implements SurveyService {
   }
 
   public boolean isOpen(Survey survey) {
-    return false;
+    final Survey persisted = surveyRepository.findById(survey.getSurveyId());
+    return persisted.isOpen();
   }
 
   @Override
@@ -34,6 +46,12 @@ public class SurveyServiceImpl implements SurveyService {
     // Opening a survey for answers
     // Closing and reopening
     // Answers must have the id of survey
+
+    return null;
+  }
+
+  @Override
+  public Survey update(SurveyId surveyId, QuestionSet qs) throws AgileException {
     return null;
   }
 
@@ -41,7 +59,11 @@ public class SurveyServiceImpl implements SurveyService {
   public Survey create(String name) throws AgileException {
     // Save and return saved instance
     // Cannot save with same name
-    return SurveyFactory.createNew();
+    try {
+      return surveyRepository.save(SurveyFactory.createNew(name));
+    } catch (Exception ex) {
+      throw new AgileException("Cannot create survey");
+    }
   }
 
   @Override
