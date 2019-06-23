@@ -1,7 +1,6 @@
 package fi.joufa.agileservices.services;
 
 import fi.joufa.agileservices.exceptions.AgileException;
-import fi.joufa.domain.model.Question;
 import fi.joufa.domain.model.QuestionSet;
 import fi.joufa.domain.model.Survey;
 import fi.joufa.domain.model.common.SurveyId;

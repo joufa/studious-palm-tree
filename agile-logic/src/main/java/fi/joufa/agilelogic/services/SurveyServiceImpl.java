@@ -7,6 +7,7 @@ import fi.joufa.domain.model.Survey;
 import fi.joufa.domain.model.SurveyFactory;
 import fi.joufa.domain.model.common.SurveyId;
 import fi.joufa.repositoryinterface.SurveyRepositoryI;
+import java.util.Collections;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -31,7 +32,7 @@ public class SurveyServiceImpl implements SurveyService {
    */
   @Override
   public List<Survey> findOpen() {
-    return null;
+    return Collections.emptyList();
   }
 
   public boolean isOpen(Survey survey) {

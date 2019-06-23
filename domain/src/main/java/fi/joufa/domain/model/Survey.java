@@ -91,13 +91,8 @@ public class Survey {
     }
 
     private boolean validate() {
-        if (this.teams == null ||this.teams.size() < 1) {
-            return false;
-        }
-        if (this.questionSet == null ||this.questionSet.size()< 1) {
-            return false;
-        }
-        return true;
+        return this.teams != null && !this.teams.isEmpty()
+     && this.questionSet != null && !this.questionSet.isEmpty();
     }
 
     public SurveyId getSurveyId() {
@@ -122,7 +117,7 @@ public class Survey {
      * @return true or false
      */
     public boolean isOpen() {
-        return this.status != null ? this.status.isOpen() : false;
+        return this.status != null && this.status.isOpen();
     }
 
 

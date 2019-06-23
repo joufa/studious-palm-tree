@@ -30,7 +30,4 @@ public class SurveyServiceImplTest {
       fail();
     }
   }
-
-  @Test
-  public void surveyService_save_returnsUpdatedSurvey() {}
 }

@@ -38,10 +38,6 @@ public class QuestionSet {
         return this.questionMap == null ||this.questionMap.isEmpty();
     }
 
-    // TODO :REMOVE
-    public void print() {
-        System.out.println(this.questionMap);
-    }
 
     public static QuestionSet create(QuestionSetId id, String name, Question... questions) {
         final AtomicInteger counter = new AtomicInteger();
