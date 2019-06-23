@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.security.InvalidParameterException;
+import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -45,21 +46,14 @@ public class SurveyTest {
         survey.addTeam(team.getTeamId());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void survey_addQuestionSet_canBeAddedOnce() {
         survey = SurveyFactory.createNew(NAME);
         final QuestionSet qs = QuestionSet.create(null, "Setti");
         qs.addQuestion(1, new Question("fish?"));
         qs.addQuestion(2, new Question("more fish?"));
-
         survey.addQuestionSet(1, qs);
-    }
-
-    @Test
-    public void survey_build_returnsValidSurvey() {
-        survey = SurveyFactory.createNew(NAME);
+        survey.addQuestionSet(1, qs);
 
     }
-
-
 }
