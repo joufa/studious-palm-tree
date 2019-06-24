@@ -1,6 +1,7 @@
 package fi.joufa.domain.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SurveyStatus {
@@ -9,13 +10,24 @@ public class SurveyStatus {
     private List<SurveyStatus> history;
     private boolean archived;
 
-    public SurveyStatus(LocalDateTime openedOn, LocalDateTime closedOn) {
+    public SurveyStatus(LocalDateTime openedOn, LocalDateTime closedOn, List<SurveyStatus> history) {
         this.openedOn = openedOn;
         this.closedOn = closedOn;
         this.archived = false;
+        if (history == null) {
+            this.history = new ArrayList<>();
+        } else {
+            this.history = history;
+        }
     }
 
-    public static SurveyStatus createInitial() {return new SurveyStatus(null, null);}
+    public static SurveyStatus createInitial() {return new SurveyStatus(null, null, null);}
+    public static SurveyStatus createWithHistory(List<SurveyStatus> history) {
+        if (history == null) {
+            throw new IllegalArgumentException("History cannot be null");
+        }
+        return new SurveyStatus(null, null, history);
+    }
 
     public boolean isOpen() {
         return this.openedOn != null;

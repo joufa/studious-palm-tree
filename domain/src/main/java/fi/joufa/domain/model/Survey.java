@@ -84,7 +84,7 @@ public class Survey {
 
     public void open() {
         if (this.validate()) {
-            this.status = new SurveyStatus(LocalDateTime.now(), null);
+            this.status = new SurveyStatus(LocalDateTime.now(), null, null);
         } else {
             throw new IllegalStateException("Survey cannot be opened");
         }

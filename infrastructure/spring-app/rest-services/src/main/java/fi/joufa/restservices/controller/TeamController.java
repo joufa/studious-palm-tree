@@ -29,8 +29,7 @@ public class TeamController {
   }
 
   @PostMapping(path = "/teams")
-  public TeamRequestDto createTeam(@RequestBody TeamRequestDto teamRequestDto)
-      throws ResponseStatusException {
+  public TeamRequestDto createTeam(@RequestBody TeamRequestDto teamRequestDto) {
     try {
       return dtoMapper.toDto(
           teamService.createTeam(

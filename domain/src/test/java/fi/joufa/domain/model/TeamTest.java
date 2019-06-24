@@ -26,4 +26,23 @@ public class TeamTest {
         assertNotEquals(firstTeam, fourthTeam);
     }
 
+    @Test
+    public void team_createTeam_buildsCorrectly() {
+        final Team firstTeam = new TeamBuilder()
+                .setTeamId(new TeamId(Long.valueOf(1)))
+                .setName("Mulq")
+                .setMemberCount(3)
+                .setDescription("Kuvausta")
+                .setStatusHistory(StatusFactory.createHistory())
+                .createTeam();
+
+        assertEquals(new TeamId(Long.valueOf(1)), firstTeam.getTeamId());
+        assertEquals("Mulq", firstTeam.getName());
+        assertEquals(Integer.valueOf(3), firstTeam.getMemberCount());
+        assertEquals("Kuvausta", firstTeam.getDescription());
+        assertNotNull(firstTeam.getStatusHistory());
+
+
+    }
+
 }

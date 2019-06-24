@@ -9,7 +9,7 @@ public class Team {
     private final String name;
     private final Integer memberCount;
     private final String description;
-   private final StatusHistory statusHistory;
+    private final StatusHistory statusHistory;
 
     public Team(TeamId teamId, String name, Integer memberCount, String description, StatusHistory statusHistory) {
         this.teamId = teamId;

@@ -1,27 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fi.joufa.spring.configuration;
+
+import static org.junit.Assert.*;
 
 import fi.joufa.repositoryinterface.TeamRepositoryI;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-/** @author udanre */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = RepositoryFactory.class)
-public class ConfigurationTest {
+@ContextConfiguration(classes = TeamService.class)
+public class TeamServiceTest {
 
   @MockBean private TeamRepositoryI teamRepositoryI;
 
+  @Autowired private TeamService teamService;
+
   @Test
-  public void contextLoads() {
-    MockitoAnnotations.initMocks(this);
+  public void teamServiceBean_loadsToContext() {
+    assertNotNull(teamService);
   }
 }

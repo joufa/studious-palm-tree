@@ -11,5 +11,5 @@ import org.springframework.transaction.annotation.Transactional;
 public class TeamService extends TeamServiceImpl {
   public TeamService(@Autowired TeamRepositoryI repo) {
     super(repo);
-  };
+  }
 }
