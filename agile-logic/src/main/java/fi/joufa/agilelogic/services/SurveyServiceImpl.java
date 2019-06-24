@@ -9,6 +9,7 @@ import fi.joufa.domain.model.common.SurveyId;
 import fi.joufa.repositoryinterface.SurveyRepositoryI;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 
 public class SurveyServiceImpl implements SurveyService {
@@ -48,11 +49,19 @@ public class SurveyServiceImpl implements SurveyService {
     // Closing and reopening
     // Answers must have the id of survey
 
+    // check if is persisted
+    final Survey present = surveyRepository.findById(survey.getSurveyId());
+
     return null;
   }
 
   @Override
   public Survey update(SurveyId surveyId, QuestionSet qs) throws AgileException {
+    final Survey present = surveyRepository.findById(surveyId);
+    Map<Integer, QuestionSet> oldSets = present.getQuestionSet();
+    if (oldSets.containsValue(qs)) {
+      // preset
+    }
     return null;
   }
 

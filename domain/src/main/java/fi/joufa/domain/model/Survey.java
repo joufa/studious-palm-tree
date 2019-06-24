@@ -4,9 +4,9 @@ package fi.joufa.domain.model;
 import fi.joufa.domain.model.common.SurveyId;
 import fi.joufa.domain.model.common.TeamId;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -36,18 +36,19 @@ public class Survey {
             throw new IllegalStateException("Survey already contains the team.");
         }
         if (teamId == null) {
-            throw new IllegalArgumentException("Team is null!");
+            throw new IllegalArgumentException("Invalid team");
         }
         this.teams.add(teamId);
     }
 
     private void checkOpen() {
-        if (this.status.isClosed()) {
-            throw new IllegalStateException("The survey is closed!");
+        if (!this.status.isDraft()) {
+            throw new IllegalStateException("The survey is opened or closed and cannot be edited");
         }
     }
 
     public void addQuestionSet(final Integer position, final QuestionSet questionSet) {
+        this.checkOpen();
         if (this.questionSet == null) {
             this.questionSet = new HashMap<>();
         }
@@ -82,11 +83,14 @@ public class Survey {
 
     }
 
+    public void close() {
+        this.status = status.close();
+    }
     public void open() {
         if (this.validate()) {
-            this.status = new SurveyStatus(LocalDateTime.now(), null, null);
+            this.status = status.open();
         } else {
-            throw new IllegalStateException("Survey cannot be opened");
+            throw new IllegalStateException("Survey cannot be opened with current state");
         }
     }
 
@@ -120,5 +124,18 @@ public class Survey {
         return this.status != null && this.status.isOpen();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Survey survey = (Survey) o;
+        return Objects.equals(surveyId, survey.surveyId) &&
+                Objects.equals(status, survey.status);
+    }
 
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(surveyId, status);
+    }
 }

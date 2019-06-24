@@ -1,7 +1,6 @@
 package fi.joufa.agilelogic.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import fi.joufa.domain.model.Survey;
 import fi.joufa.domain.model.common.SurveyId;
@@ -26,6 +25,7 @@ public class SurveyServiceImplTest {
       final Survey survey = surveyService.create("First Survey");
       assertEquals(new SurveyId(Long.valueOf(1)), survey.getSurveyId());
       assertEquals(1, surveyService.findAll().size());
+      assertFalse(survey.isOpen());
     } catch (Exception ex) {
       fail();
     }

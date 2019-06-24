@@ -1,11 +1,8 @@
 package fi.joufa.domain.model;
 
 import fi.joufa.domain.model.common.TeamId;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.security.InvalidParameterException;
-import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -54,6 +51,46 @@ public class SurveyTest {
         qs.addQuestion(2, new Question("more fish?"));
         survey.addQuestionSet(1, qs);
         survey.addQuestionSet(1, qs);
+    }
 
+    @Test(expected = IllegalStateException.class)
+    public void survey_update_cannotUpdateClosed() {
+        survey = SurveyFactory.createNew(NAME);
+        final QuestionSet qs = QuestionSet.create(null, "Setti");
+        qs.addQuestion(1, new Question("fish?"));
+        qs.addQuestion(2, new Question("more fish?"));
+        survey.addQuestionSet(1, qs);
+        survey.close();
+        survey.addQuestionSet(1, qs);
+
+    }
+
+    @Test
+    public void survey_open_SurveyCanBeOpened() {
+        survey = SurveyFactory.createNew(NAME);
+        final QuestionSet qs = QuestionSet.create(null, "Setti");
+        qs.addQuestion(1, new Question("fish?"));
+        qs.addQuestion(2, new Question("more fish?"));
+        survey.addQuestionSet(1, qs);
+        survey.addTeam(new TeamId(Long.valueOf(1)));
+        survey.open();
+        assertTrue(survey.isOpen());
+        survey.close();
+        assertFalse(survey.isOpen());
+    }
+
+    @Test
+    public void survey_clone_surveyCanBeCloned() {
+        survey = SurveyFactory.createNew(NAME);
+        final QuestionSet qs = QuestionSet.create(null, "Setti");
+        qs.addQuestion(1, new Question("fish?"));
+        qs.addQuestion(2, new Question("more fish?"));
+        survey.addQuestionSet(1, qs);
+        survey.addTeam(new TeamId(Long.valueOf(1)));
+        survey.open();
+        survey.close();
+
+        final Survey cloned = SurveyFactory.clone(survey);
+        assertNotEquals(cloned, survey);
     }
 }
