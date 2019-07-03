@@ -1,8 +1,6 @@
 package fi.joufa.domain.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SurveyStatus {
     private LocalDateTime openedOn;
@@ -36,5 +34,13 @@ public class SurveyStatus {
         this.openedOn = LocalDateTime.now();
         this.closedOn = null;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "SurveyStatus{" +
+                "openedOn=" + openedOn +
+                ", closedOn=" + closedOn +
+                '}';
     }
 }

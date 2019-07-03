@@ -24,27 +24,13 @@ public class QuestionSetTest {
 
     @Test
     public void setCanBeCreated() {
-        final QuestionSet qs = QuestionSet.create(null, "Initial set");
+        final QuestionMap<Question> qm = QuestionMap.createQuestionMap(this.questions);
+        final QuestionSet qs = QuestionSet.create("Setti 1", qm);
         assertNotNull(qs);
+        assertTrue(qs.getQuestionMap().getQuestions().containsKey(1));
+        assertEquals(this.questions.get(0), qs.getQuestionMap().getByKey(1));
+        assertEquals(this.questions.get(1), qs.getQuestionMap().getByKey(2));
+        assertEquals(this.questions.get(2), qs.getQuestionMap().getByKey(3));
     }
-
-    @Test
-    public void questionCanBeAdded() {
-        final QuestionSet qs = QuestionSet.create(
-                new QuestionSetId(Long.valueOf(1)),
-                "Eka",
-                questions.get(0), questions.get(1));
-        assertNotNull(qs);
-        assertFalse(qs.isEmpty());
-    }
-
-    @Test(expected = IllegalStateException.class)
-    public void sameQuestionsCannotBeAddedTwice() {
-        final QuestionSet qs = QuestionSet.create(
-                new QuestionSetId(Long.valueOf(1)),
-                "Eka",
-                questions.get(0), questions.get(0));
-    }
-
 
 }

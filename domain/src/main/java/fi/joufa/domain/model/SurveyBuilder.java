@@ -3,19 +3,20 @@ package fi.joufa.domain.model;
 import fi.joufa.domain.model.common.SurveyId;
 import fi.joufa.domain.model.common.TeamId;
 
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Set;
 
 public class SurveyBuilder {
     private SurveyId surveyId;
     private String name;
     private Set<TeamId> teams;
-    private Map<Integer, QuestionSet> questionSet;
+    private QuestionMap<QuestionSet> questionSet;
     private StatusHistory statusHistory;
     private SurveyStatus status;
+    private SurveyHistory history;
 
-    public SurveyBuilder setSurveyId(SurveyId surveyId) {
-        this.surveyId = surveyId;
+    public SurveyBuilder setSurveyId(Long id) {
+        this.surveyId = new SurveyId(id);
         return this;
     }
 
@@ -24,13 +25,20 @@ public class SurveyBuilder {
         return this;
     }
 
-    public SurveyBuilder setTeams(Set<TeamId> teams) {
+    public SurveyBuilder setTeams(Long teamId) {
+        if (this.teams == null) {
+            this.teams = new HashSet<>();
+        }
+        this.teams.add(new TeamId(teamId));
+        return this;
+    }
+    public SurveyBuilder setAllTeams(Set<TeamId> teams) {
         this.teams = teams;
         return this;
     }
 
-    public SurveyBuilder setQuestionSet(Map<Integer, QuestionSet> questionSet) {
-        this.questionSet = questionSet;
+    public SurveyBuilder setQuestionSets(QuestionMap<QuestionSet> questionMap) {
+        this.questionSet = questionMap;
         return this;
     }
 
@@ -40,11 +48,30 @@ public class SurveyBuilder {
     }
 
     public SurveyBuilder setStatus(SurveyStatus status) {
+        if (status == null) {
+            this.status = SurveyStatus.createInitial();
+            return this;
+        }
         this.status = status;
         return this;
     }
 
+    public SurveyBuilder setHistory(SurveyHistory surveyHistory) {
+        if (surveyHistory == null) {
+            this.history = new SurveyHistory(null);
+        }
+        this.history = surveyHistory;
+        return this;
+    }
+
+    public SurveyBuilder initStatus() {
+        this.statusHistory = StatusFactory.createHistory();
+        this.status = SurveyStatus.createInitial();
+        this.history = new SurveyHistory();
+        return this;
+    }
+
     public Survey createSurvey() {
-        return new Survey(surveyId, name, teams, questionSet, statusHistory, status);
+        return new Survey(surveyId, name, teams, questionSet, statusHistory, status, history);
     }
 }

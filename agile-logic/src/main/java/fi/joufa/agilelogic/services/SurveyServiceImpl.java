@@ -2,14 +2,14 @@ package fi.joufa.agilelogic.services;
 
 import fi.joufa.agileservices.exceptions.AgileException;
 import fi.joufa.agileservices.services.SurveyService;
-import fi.joufa.domain.model.QuestionSet;
-import fi.joufa.domain.model.Survey;
-import fi.joufa.domain.model.SurveyFactory;
+import fi.joufa.domain.model.*;
 import fi.joufa.domain.model.common.SurveyId;
+import fi.joufa.domain.model.common.TeamId;
 import fi.joufa.repositoryinterface.SurveyRepositoryI;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import javax.inject.Inject;
 
 public class SurveyServiceImpl implements SurveyService {
@@ -26,13 +26,9 @@ public class SurveyServiceImpl implements SurveyService {
     return surveyRepository.findAll();
   }
 
-  /**
-   * find surveys that can accept answers
-   *
-   * @return
-   */
   @Override
-  public List<Survey> findOpen() {
+  public List<Survey> findAllOpen() {
+
     return Collections.emptyList();
   }
 
@@ -42,27 +38,35 @@ public class SurveyServiceImpl implements SurveyService {
   }
 
   @Override
-  public Survey update(final Survey survey) {
-    // The use case is creating and deleting questions from sets
-    // A new set cannot be empty
-    // Opening a survey for answers
-    // Closing and reopening
-    // Answers must have the id of survey
+  public Survey update(final Survey survey) throws AgileException {
+    try {
+      final Survey present = surveyRepository.findById(survey.getSurveyId());
+      if (present == null || survey.getSurveyId() == null) {
+        throw new IllegalArgumentException("Cannot find survey");
+      }
 
-    // check if is persisted
-    final Survey present = surveyRepository.findById(survey.getSurveyId());
+      final Set<TeamId> teams =
+          survey.getTeams().equals(present.getTeams()) ? present.getTeams() : survey.getTeams();
+      final QuestionMap<QuestionSet> qm =
+          present.getQuestionSets().equals(survey.getQuestionSets())
+              ? present.getQuestionSets()
+              : survey.getQuestionSets();
 
-    return null;
-  }
-
-  @Override
-  public Survey update(SurveyId surveyId, QuestionSet qs) throws AgileException {
-    final Survey present = surveyRepository.findById(surveyId);
-    Map<Integer, QuestionSet> oldSets = present.getQuestionSet();
-    if (oldSets.containsValue(qs)) {
-      // preset
+      final Survey updated =
+          new SurveyBuilder()
+              .setSurveyId(present.getSurveyId().get())
+              .setName(present.getName())
+              .setAllTeams(teams)
+              .setQuestionSets(qm)
+              .setStatusHistory(StatusFactory.update(survey.getStatusHistory()))
+              .setStatus(survey.getStatus())
+              .setHistory(survey.getSurveyHistory())
+              .createSurvey();
+      System.out.println("Saving " + updated);
+      return surveyRepository.save(updated);
+    } catch (Exception e) {
+      throw new AgileException(e.getMessage());
     }
-    return null;
   }
 
   @Override
@@ -72,12 +76,18 @@ public class SurveyServiceImpl implements SurveyService {
     try {
       return surveyRepository.save(SurveyFactory.createNew(name));
     } catch (Exception ex) {
+      System.out.println(ex);
       throw new AgileException("Cannot create survey");
     }
   }
 
   @Override
-  public Survey findOne(SurveyId surveyId) {
+  public Survey createFrom(SurveyId surveyId) throws AgileException {
     return null;
+  }
+
+  @Override
+  public Optional<Survey> findOne(SurveyId surveyId) {
+    return Optional.of(this.surveyRepository.findById(surveyId));
   }
 }

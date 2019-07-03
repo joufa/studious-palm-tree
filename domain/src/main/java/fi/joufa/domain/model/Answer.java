@@ -12,13 +12,14 @@ public class Answer {
     private Question question;
     private String comment;
 
-    public Answer(BigDecimal value, QuestionSetId questionSetId, TeamId teamId, Question question, String comment) {
+    Answer(BigDecimal value, QuestionSetId questionSetId, TeamId teamId, Question question, String comment) {
         this.value = value;
         this.questionSetId = questionSetId;
         this.teamId = teamId;
         this.question = question;
         this.comment = comment;
     }
+
 
     public BigDecimal getValue() {
         return value;

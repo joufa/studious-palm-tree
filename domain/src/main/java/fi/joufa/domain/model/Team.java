@@ -11,7 +11,7 @@ public class Team {
     private final String description;
     private final StatusHistory statusHistory;
 
-    public Team(TeamId teamId, String name, Integer memberCount, String description, StatusHistory statusHistory) {
+    Team(TeamId teamId, String name, Integer memberCount, String description, StatusHistory statusHistory) {
         this.teamId = teamId;
         this.name = name;
         this.memberCount = memberCount;

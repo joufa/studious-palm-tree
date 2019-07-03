@@ -3,7 +3,7 @@ package fi.joufa.domain.model;
 import java.util.Objects;
 
 
-public class Question {
+public class Question implements Answerable {
 
     private final String questionText;
 
