@@ -1,9 +1,6 @@
 package fi.joufa.domain.model;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -41,6 +38,14 @@ public class QuestionMap<T extends Answerable> {
         return this.questions.isEmpty();
     }
 
+    public List<T> getAsList() {
+        if (this.questions == null) {
+            return Collections.emptyList();
+        }
+
+        return new ArrayList<>(this.questions.values());
+    }
+
     @Override
     public String toString() {
         return "QuestionMap{" +
@@ -59,5 +64,12 @@ public class QuestionMap<T extends Answerable> {
     @Override
     public int hashCode() {
         return Objects.hash(questions);
+    }
+
+    public int size() {
+        if (this.questions == null) {
+            return 0;
+        }
+        return this.questions.size();
     }
 }

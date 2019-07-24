@@ -62,7 +62,6 @@ public class SurveyServiceImpl implements SurveyService {
               .setStatus(survey.getStatus())
               .setHistory(survey.getSurveyHistory())
               .createSurvey();
-      System.out.println("Saving " + updated);
       return surveyRepository.save(updated);
     } catch (Exception e) {
       throw new AgileException(e.getMessage());
@@ -71,12 +70,11 @@ public class SurveyServiceImpl implements SurveyService {
 
   @Override
   public Survey create(String name) throws AgileException {
-    // Save and return saved instance
-    // Cannot save with same name
+    System.out.println("...create with " + name);
     try {
       return surveyRepository.save(SurveyFactory.createNew(name));
     } catch (Exception ex) {
-      System.out.println(ex);
+      ex.printStackTrace();
       throw new AgileException("Cannot create survey");
     }
   }
