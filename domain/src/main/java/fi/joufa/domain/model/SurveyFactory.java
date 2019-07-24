@@ -1,10 +1,5 @@
 package fi.joufa.domain.model;
 
-import fi.joufa.domain.model.common.TeamId;
-
-import java.util.HashMap;
-import java.util.HashSet;
-
 public class SurveyFactory {
 
     private SurveyFactory() {
@@ -15,9 +10,10 @@ public class SurveyFactory {
         if (name == null) {
             throw new IllegalArgumentException("Name cannot be null");
         }
-        return new SurveyBuilder().setSurveyId(null).setName(name).setTeams(new HashSet<TeamId>()).setQuestionSet(new HashMap<Integer, QuestionSet>()).setStatusHistory(StatusFactory.createHistory()).setStatus(SurveyStatus.createInitial()).createSurvey();
+        return new SurveyBuilder()
+                .setName(name)
+                .initStatus()
+                .createSurvey();
     }
-
-
 
 }

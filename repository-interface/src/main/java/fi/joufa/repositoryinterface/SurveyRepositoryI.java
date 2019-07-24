@@ -9,6 +9,9 @@ public interface SurveyRepositoryI {
 
     Survey save(Survey survey);
     List<Survey> findAll();
+    List<Survey> findAllOpen();
     Survey findById(SurveyId surveyId);
+    Survey findByName(String name);
+
 
 }

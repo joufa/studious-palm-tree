@@ -4,9 +4,7 @@ package fi.joufa.domain.model;
 import fi.joufa.domain.model.common.SurveyId;
 import fi.joufa.domain.model.common.TeamId;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -16,109 +14,146 @@ public class Survey {
     private SurveyId surveyId;
     private String name;
     private Set<TeamId> teams;
-    private Map<Integer, QuestionSet> questionSet;
+    private QuestionMap<QuestionSet> questionSets;
     private StatusHistory statusHistory;
     private SurveyStatus status;
+    private SurveyHistory surveyHistory;
 
 
-    public Survey(SurveyId surveyId, String name, Set<TeamId> teams, Map<Integer, QuestionSet> questionSet, StatusHistory statusHistory, SurveyStatus status) {
+    Survey(SurveyId surveyId, String name, Set<TeamId> teams, QuestionMap<QuestionSet> questionSets, StatusHistory statusHistory, SurveyStatus status, SurveyHistory history) {
         this.surveyId = surveyId;
         this.name = name;
         this.teams = teams;
-        this.questionSet = questionSet;
+        this.questionSets = questionSets;
         this.statusHistory = statusHistory;
         this.status = status;
-    }
+        this.surveyHistory = history;
 
-    public void addTeam(TeamId teamId) {
-        this.checkOpen();
-        if (this.teams.contains(teamId)) {
-            throw new IllegalStateException("Survey already contains the team.");
-        }
-        if (teamId == null) {
-            throw new IllegalArgumentException("Team is null!");
-        }
-        this.teams.add(teamId);
-    }
-
-    private void checkOpen() {
-        if (this.status.isClosed()) {
-            throw new IllegalStateException("The survey is closed!");
+        if (this.name == null ||this.statusHistory == null ||this.status == null ||this.surveyHistory == null) {
+            throw new IllegalArgumentException("Survey creation failed");
         }
     }
 
-    public void addQuestionSet(final Integer position, final QuestionSet questionSet) {
-        if (this.questionSet == null) {
-            this.questionSet = new HashMap<>();
-        }
-        if (position == null) {
-            throw new IllegalArgumentException("Position cannot be null");
-        }
-        if (!validateQuestionSet(questionSet)) {
-            throw new IllegalArgumentException("QuestionSet is invalid");
-        }
-        if (this.questionSet.containsKey(position)) {
-            throw new IllegalArgumentException("QuestionSet is already present");
-        }
 
-        this.questionSet.put(position, questionSet);
-
+    /**
+     * Checks if the survey is open, eg. accepting answers.
+     *
+     * @return true if open, otherwise false
+     */
+    public boolean isOpen() {
+       return this.status.isOpen();
     }
 
-    public Map<Integer, QuestionSet> getQuestionSet() {
-        return questionSet;
-    }
-
-    public SurveyStatus getStatus() {
-        return status;
-    }
-
-    private boolean validateQuestionSet(QuestionSet questionSet) {
-        if (questionSet == null) {
-            return false;
+    public void update(QuestionMap<QuestionSet> qm) {
+        if (qm == null) {
+            throw new IllegalArgumentException();
+        }
+        if (this.isOpen()) {
+            throw new IllegalStateException("Cannot update and open survey");
         }
 
-        return questionSet.isValid();
+            this.questionSets = qm;
 
     }
+    public void update(Set<TeamId> teams) {
+        if (teams == null) {
+            throw new IllegalArgumentException();
+        }
+        if (this.isOpen()) {
+            throw new IllegalStateException("Cannot update and open survey");
+        }
+        this.teams = teams;
+    }
 
+
+    /**
+     * Closes the survey
+     */
+    public void close()  {
+        this.status = status.close();
+    }
+
+
+
+    /**
+     * Opens the survey for answers
+     */
     public void open() {
-        if (this.validate()) {
-            this.status = new SurveyStatus(LocalDateTime.now(), null);
-        } else {
-            throw new IllegalStateException("Survey cannot be opened");
-        }
+        throw new UnsupportedOperationException("Not supported yet");
     }
 
-    private boolean validate() {
-        return this.teams != null && !this.teams.isEmpty()
-     && this.questionSet != null && !this.questionSet.isEmpty();
+    public boolean validate() {
+        // cannot open if not persisted
+        // must contain a team
+        // questionset validation ok
+        // must have statuses
+        return this.surveyId != null && validateQuestionSets() && validateTeams() && validateStatusHistory();
     }
+
 
     public SurveyId getSurveyId() {
         return surveyId;
-    }
-
-    public Set<TeamId> getTeams() {
-        return teams;
-    }
-
-    public StatusHistory getStatusHistory() {
-        return statusHistory;
     }
 
     public String getName() {
         return name;
     }
 
-    /**
-     * Is survey open to be answered?
-     *
-     * @return true or false
-     */
-    public boolean isOpen() {
-        return this.status != null && this.status.isOpen();
+    public Set<TeamId> getTeams() {
+        return teams;
     }
 
+    public QuestionMap<QuestionSet> getQuestionSets() {
+        return questionSets;
+    }
 
+    public StatusHistory getStatusHistory() {
+        return statusHistory;
+    }
+
+    public SurveyStatus getStatus() {
+        return status;
+    }
+
+    public SurveyHistory getSurveyHistory() {
+        return surveyHistory;
+    }
+
+    private boolean validateTeams() {
+        return this.teams != null && !this.teams.isEmpty();
+    }
+    private boolean validateQuestionSets() {
+        return this.questionSets != null && !this.questionSets.isEmpty();
+    }
+
+    private boolean validateStatusHistory() {
+        return this.statusHistory != null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Survey survey = (Survey) o;
+        return surveyId.equals(survey.surveyId) &&
+                name.equals(survey.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(surveyId, name);
+    }
+
+    @Override
+    public String toString() {
+        return "Survey{" +
+                "surveyId=" + surveyId +
+                ", name='" + name + '\'' +
+                ", teams=" + teams +
+                ", questionSets=" + questionSets +
+                ", statusHistory=" + statusHistory +
+                ", status=" + status +
+                ", surveyHistory=" + surveyHistory +
+                '}';
+    }
 }

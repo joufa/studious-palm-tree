@@ -1,47 +1,46 @@
 package fi.joufa.domain.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class SurveyStatus {
     private LocalDateTime openedOn;
     private LocalDateTime closedOn;
-    private List<SurveyStatus> history;
-    private boolean archived;
 
     public SurveyStatus(LocalDateTime openedOn, LocalDateTime closedOn) {
         this.openedOn = openedOn;
         this.closedOn = closedOn;
-        this.archived = false;
     }
 
     public static SurveyStatus createInitial() {return new SurveyStatus(null, null);}
 
+
     public boolean isOpen() {
-        return this.openedOn != null;
+        return this.openedOn != null && this.closedOn == null;
     }
 
-    public boolean isClosed() {
-        return this.closedOn != null && this.openedOn != null;
-
-    }
     public boolean isDraft() {
-     return this.closedOn == null && this.openedOn == null;
-    }
-    private void archive() {
-        this.archived = true;
+        return this.closedOn == null && this.openedOn == null;
     }
 
-    public boolean isArchived() {
-        return archived;
-    }
-
-    public void reOpen() {
-        if (this.isClosed()) {
-            this.archive();
-            this.history.add(this);
-            this.openedOn = null;
-            this.closedOn = null;
+    SurveyStatus close() {
+        if (this.isOpen()) {
+            this.closedOn = LocalDateTime.now();
+            return this;
         }
+        throw new IllegalStateException("Cannot close survey as it is not open yet.");
+    }
+
+    SurveyStatus open() {
+        this.openedOn = LocalDateTime.now();
+        this.closedOn = null;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "SurveyStatus{" +
+                "openedOn=" + openedOn +
+                ", closedOn=" + closedOn +
+                '}';
     }
 }

@@ -1,5 +1,6 @@
 package fi.joufa.restservices.controller;
 
+import fi.joufa.domain.model.Survey;
 import fi.joufa.domain.model.Team;
 import java.time.ZoneId;
 import java.util.Date;
@@ -22,6 +23,13 @@ public class DtoMapper {
             ? Date.from(
                 team.getStatusHistory().getUpdatedAt().atZone(ZoneId.systemDefault()).toInstant())
             : null);
+    return dto;
+  }
+
+  public SurveyDto toDto(Survey survey) {
+    final SurveyDto dto = new SurveyDto();
+    dto.setId(survey.getSurveyId().get());
+    dto.setName(survey.getName());
     return dto;
   }
 }

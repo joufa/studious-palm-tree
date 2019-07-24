@@ -21,8 +21,13 @@ public class TeamRepositoryStub implements TeamRepositoryI {
   }
 
   public static Team addTeam() {
-    return new Team(
-        new TeamId(Long.valueOf(1)), "Testi", 3, "Testitiimi", StatusFactory.createHistory());
+    return new TeamBuilder()
+        .setTeamId(new TeamId(Long.valueOf(1)))
+        .setName("Testi")
+        .setMemberCount(3)
+        .setDescription("Testitiimi")
+        .setStatusHistory(StatusFactory.createHistory())
+        .createTeam();
   }
 
   @Override

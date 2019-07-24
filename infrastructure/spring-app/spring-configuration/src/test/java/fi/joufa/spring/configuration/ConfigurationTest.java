@@ -5,6 +5,7 @@
  */
 package fi.joufa.spring.configuration;
 
+import fi.joufa.repositoryinterface.SurveyRepositoryI;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,10 +16,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 /** @author udanre */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = ApplicationLogicFactory.class)
+@ContextConfiguration(classes = RepositoryFactory.class)
 public class ConfigurationTest {
 
   @MockBean private TeamRepositoryI teamRepositoryI;
+  @MockBean private SurveyRepositoryI surveyRepositoryI;
 
   @Test
   public void contextLoads() {

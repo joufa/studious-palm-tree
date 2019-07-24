@@ -37,8 +37,7 @@ public class TeamRepositoryImpl implements TeamRepositoryI {
 
   @Override
   public List<Team> findAll() {
-    final List<TeamEntity> entities = teamEntityRepository.findAll();
-    return entities.stream()
+    return teamEntityRepository.findAll().stream()
         .map(s -> domainToEntityMapper.teamEntityToTeam(s))
         .collect(Collectors.toList());
   }
