@@ -56,6 +56,6 @@ public class SurveyEntityRepositoryTest {
     final SurveyEntity debug = surveyEntityRepository.findById(Long.valueOf(1)).get();
     final Survey constructed =
         sem.entityToSurvey(surveyEntityRepository.findById(Long.valueOf(1)).get());
-    System.out.println(constructed);
+    assertThat(constructed).isNotNull();
   }
 }

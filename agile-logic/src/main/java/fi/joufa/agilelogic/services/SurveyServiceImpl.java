@@ -70,11 +70,9 @@ public class SurveyServiceImpl implements SurveyService {
 
   @Override
   public Survey create(String name) throws AgileException {
-    System.out.println("...create with " + name);
     try {
       return surveyRepository.save(SurveyFactory.createNew(name));
     } catch (Exception ex) {
-      ex.printStackTrace();
       throw new AgileException("Cannot create survey");
     }
   }
