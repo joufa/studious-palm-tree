@@ -4,6 +4,7 @@ import fi.joufa.databaserepository.mapper.DomainToEntityMapper;
 import fi.joufa.databaserepository.model.TeamEntity;
 import fi.joufa.databaserepository.repository.TeamEntityRepository;
 import fi.joufa.domain.model.Team;
+import fi.joufa.domain.model.common.TeamId;
 import fi.joufa.repositoryinterface.TeamRepositoryI;
 import java.util.List;
 import java.util.logging.Level;
@@ -32,6 +33,11 @@ public class TeamRepositoryImpl implements TeamRepositoryI {
     if (teamEntity != null) {
       return domainToEntityMapper.teamEntityToTeam(teamEntity);
     }
+    return null;
+  }
+
+  @Override
+  public Team findTeamById(TeamId id) {
     return null;
   }
 

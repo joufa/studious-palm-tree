@@ -75,4 +75,9 @@ public class TeamRepositoryStub implements TeamRepositoryI {
   public Team findTeamByName(String name) {
     return teams.stream().filter(team -> team.getName().equals(name)).findFirst().orElse(null);
   }
+
+  @Override
+  public Team findTeamById(TeamId id) {
+    return teams.stream().filter(team -> team.getTeamId().equals(id)).findFirst().orElse(null);
+  }
 }

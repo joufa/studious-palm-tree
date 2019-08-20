@@ -6,19 +6,20 @@ import fi.joufa.domain.model.*;
 import fi.joufa.domain.model.common.SurveyId;
 import fi.joufa.domain.model.common.TeamId;
 import fi.joufa.repositoryinterface.SurveyRepositoryI;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import fi.joufa.repositoryinterface.TeamRepositoryI;
+import java.time.LocalDateTime;
+import java.util.*;
 import javax.inject.Inject;
 
 public class SurveyServiceImpl implements SurveyService {
 
   private final SurveyRepositoryI surveyRepository;
+  private final TeamRepositoryI teamRepository;
 
   @Inject
-  public SurveyServiceImpl(SurveyRepositoryI surveyRepository) {
+  public SurveyServiceImpl(SurveyRepositoryI surveyRepository, TeamRepositoryI teamRepository) {
     this.surveyRepository = surveyRepository;
+    this.teamRepository = teamRepository;
   }
 
   @Override
@@ -51,6 +52,7 @@ public class SurveyServiceImpl implements SurveyService {
           present.getQuestionSets().equals(survey.getQuestionSets())
               ? present.getQuestionSets()
               : survey.getQuestionSets();
+      // Update
 
       final Survey updated =
           new SurveyBuilder()
@@ -73,8 +75,42 @@ public class SurveyServiceImpl implements SurveyService {
     try {
       return surveyRepository.save(SurveyFactory.createNew(name));
     } catch (Exception ex) {
-      throw new AgileException("Cannot create survey");
+      throw new AgileException("Cannot create survey: " + ex);
     }
+  }
+
+  @Override
+  public Survey update(SurveyUpdate surveyUpdate) throws AgileException {
+    Set teamsUpdate = null;
+    Survey survey = surveyRepository.findById(surveyUpdate.getId());
+    System.out.print(survey);
+    if (survey == null) {
+      throw new AgileException("Cannot find survey for update");
+    }
+    if (survey.isOpen()) {
+      throw new AgileException("Survey is open and therefore cannot be modified");
+    }
+
+    // Changes in teams
+    if (surveyUpdate.getTeams() != null) {
+      teamsUpdate = this.fixTeamsForUpdate(survey.getTeams(), surveyUpdate.getTeams());
+    }
+
+    // Update tags
+    StatusHistory sh =
+        new StatusHistory(survey.getStatusHistory().getCreatedAt(), LocalDateTime.now());
+    final Survey finalSurvey =
+        new SurveyBuilder()
+            .setName(survey.getName())
+            .setAllTeams(teamsUpdate)
+            .setSurveyId(Long.valueOf(survey.getSurveyId().get()))
+            .setStatus(survey.getStatus())
+            .setHistory(survey.getSurveyHistory())
+            .setQuestionSets(survey.getQuestionSets())
+            .setStatusHistory(sh)
+            .createSurvey();
+
+    return surveyRepository.save(finalSurvey);
   }
 
   @Override
@@ -85,5 +121,19 @@ public class SurveyServiceImpl implements SurveyService {
   @Override
   public Optional<Survey> findOne(SurveyId surveyId) {
     return Optional.of(this.surveyRepository.findById(surveyId));
+  }
+
+  private Set<TeamId> fixTeamsForUpdate(Set<TeamId> oldTeams, Set<TeamId> newTeams) {
+    if (newTeams == null) {
+      return oldTeams == null ? Collections.emptySet() : oldTeams;
+    }
+
+    if (oldTeams == null) {
+      return newTeams;
+    }
+
+    oldTeams.addAll(newTeams);
+
+    return oldTeams;
   }
 }

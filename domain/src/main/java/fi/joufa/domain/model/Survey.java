@@ -37,12 +37,15 @@ public class Survey {
 
     /**
      * Checks if the survey is open, eg. accepting answers.
+     * Already open survey cannot be modified.
      *
      * @return true if open, otherwise false
      */
     public boolean isOpen() {
-       return this.status.isOpen();
+
+        return this.status.isOpen() && this.surveyHistory.getHistory() == null && this.surveyHistory.getHistory().size() < 1;
     }
+
 
     public void update(QuestionMap<QuestionSet> qm) {
         if (qm == null) {
@@ -67,19 +70,24 @@ public class Survey {
 
 
     /**
-     * Closes the survey
+     * Closes the survey and archives it.
      */
     public void close()  {
         this.status = status.close();
+        this.surveyHistory.add(this.status);
     }
 
 
 
     /**
      * Opens the survey for answers
+     * Generates identifier for the answers
      */
     public void open() {
-        throw new UnsupportedOperationException("Not supported yet");
+        if (!this.isOpen()) {
+            this.status = status.open();
+        }
+
     }
 
     public boolean validate() {
