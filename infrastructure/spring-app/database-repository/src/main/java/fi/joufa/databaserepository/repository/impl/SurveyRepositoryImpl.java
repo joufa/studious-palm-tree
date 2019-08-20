@@ -27,13 +27,12 @@ public class SurveyRepositoryImpl implements SurveyRepositoryI {
   @Override
   public Survey save(Survey survey) {
     final SurveyEntity se = sem.surveyToEntity(survey);
-    System.out.println(se);
+
     final SurveyEntity saved = surveyEntityRepository.save(se);
-    System.out.println(saved);
+
     final Survey survey1 = sem.entityToSurvey(saved);
-    System.out.println(survey1);
+
     return survey1;
-    // return sem.entityToSurvey(surveyEntityRepository.save(sem.surveyToEntity(survey)));
   }
 
   @Override

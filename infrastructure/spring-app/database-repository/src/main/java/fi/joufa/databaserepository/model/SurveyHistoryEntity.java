@@ -17,8 +17,6 @@ public class SurveyHistoryEntity {
 
   @Column private Date closedOn;
 
-  public SurveyHistoryEntity() {};
-
   public SurveyHistoryEntity(String id, Date openedOn, Date closedOn) {
     this.id = id;
     this.openedOn = openedOn;
