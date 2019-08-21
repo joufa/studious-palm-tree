@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-title *ngIf="!team">Luo tiimi</mat-card-title>
+  <mat-card-title *ngIf="team">Muokka tiimiä
+  </mat-card-title>
+  <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    
+      <mat-form-field>
+        <input type="text" required matInput placeholder="Nimi" formControlName="name"/>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="number" matInput placeholder="Koko" formControlName="memberCount"/>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Kuvaus" formControlName="desc"/>
+      </mat-form-field>
+      <button mat-button type="submit" *ngIf="!team">
+            Luo tiimi
+          </button>
+          <button mat-raised-button type="submit" *ngIf="team">
+            Tallenna
+          </button>
+          <button mat-raised-button color="warn" *ngIf="team">Poista</button>
+    </form>
+  </mat-card-content>
+  <mat-card-footer>
+    
+</mat-card-footer>
+
+ 
+</mat-card>

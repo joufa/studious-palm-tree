@@ -4,6 +4,7 @@ import fi.joufa.databaserepository.config.DateFactory;
 import fi.joufa.databaserepository.model.QuestionEntity;
 import fi.joufa.databaserepository.model.QuestionSetEntity;
 import fi.joufa.databaserepository.model.SurveyEntity;
+import fi.joufa.databaserepository.model.SurveyHistoryEntity;
 import fi.joufa.domain.model.*;
 import fi.joufa.domain.model.common.TeamId;
 import java.util.ArrayList;
@@ -51,6 +52,19 @@ public class SurveyEntityMapper {
     }
     se.setCreatedAt(dateFactory.convertToDate(survey.getStatusHistory().getCreatedAt()));
     se.setUpdatedAt(dateFactory.convertToDate(survey.getStatusHistory().getUpdatedAt()));
+
+    List<SurveyHistoryEntity> history =
+        survey.getSurveyHistory() != null
+            ? survey.getSurveyHistory().getHistory().stream()
+                .map(
+                    historyItem ->
+                        new SurveyHistoryEntity(
+                            historyItem.getId().toString(),
+                            dateFactory.convertToDate(historyItem.getOpenedOn()),
+                            dateFactory.convertToDate(historyItem.getClosedOn())))
+                .collect(Collectors.toList())
+            : null;
+    se.setHistory(history);
     if (survey.getTeams() != null) {
       se.setTeams(this.mapTeams(survey.getTeams()));
     }
@@ -58,18 +72,24 @@ public class SurveyEntityMapper {
   }
 
   public Survey entityToSurvey(SurveyEntity se) {
-    List<QuestionSetEntity> sets = se.getSets();
-    List<QuestionSet> qsList = new ArrayList<>();
-    Collections.sort(sets);
-    for (QuestionSetEntity qse : sets) {
-      if (qse.getQuestions() != null) {
-        final List<QuestionEntity> questionsFromSet = qse.getQuestions();
-        final QuestionMap<Question> qm = toQuestions(questionsFromSet);
-        final QuestionSet qs = QuestionSet.create(qse.getName(), qm);
-        qsList.add(qs);
+    QuestionMap<QuestionSet> questMap;
+    questMap = null;
+    // Has questions
+    if (se.getSets() != null) {
+      final List<QuestionSetEntity> sets = se.getSets();
+      final List<QuestionSet> qsList = new ArrayList<>();
+      Collections.sort(sets);
+      for (QuestionSetEntity qse : sets) {
+        if (qse.getQuestions() != null) {
+          final List<QuestionEntity> questionsFromSet = qse.getQuestions();
+          final QuestionMap<Question> qm = toQuestions(questionsFromSet);
+          final QuestionSet qs = QuestionSet.create(qse.getName(), qm);
+          qsList.add(qs);
+        }
       }
+      questMap = QuestionMap.createQuestionMap(qsList);
     }
-    final QuestionMap<QuestionSet> questMap = QuestionMap.createQuestionMap(qsList);
+
     return new SurveyBuilder()
         .setSurveyId(se.getId())
         .setName(se.getName())
@@ -94,13 +114,13 @@ public class SurveyEntityMapper {
     if (teams == null || teams.isEmpty()) {
       return Collections.emptySet();
     }
-    return teams.stream().map(team -> team.getId()).collect(Collectors.toSet());
+    return teams.stream().map(TeamId::getId).collect(Collectors.toSet());
   }
 
   private Set<TeamId> mapLong(Set<Long> teams) {
     if (teams == null || teams.isEmpty()) {
       return Collections.emptySet();
     }
-    return teams.stream().map(id -> new TeamId(id)).collect(Collectors.toSet());
+    return teams.stream().map(TeamId::new).collect(Collectors.toSet());
   }
 }

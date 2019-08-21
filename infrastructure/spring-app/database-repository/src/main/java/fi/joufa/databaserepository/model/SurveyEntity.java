@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "surveys")
 public class SurveyEntity {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", updatable = false, nullable = false)
   private Long id;
 
@@ -18,6 +18,9 @@ public class SurveyEntity {
 
   @OneToMany(mappedBy = "survey")
   private List<QuestionSetEntity> sets;
+
+  @OneToMany(mappedBy = "survey")
+  private List<SurveyHistoryEntity> history;
 
   @Column private Date createdAt;
 
@@ -93,5 +96,36 @@ public class SurveyEntity {
 
   public void setTeams(Set<Long> teams) {
     this.teams = teams;
+  }
+
+  public List<SurveyHistoryEntity> getHistory() {
+    return history;
+  }
+
+  public void setHistory(List<SurveyHistoryEntity> history) {
+    this.history = history;
+  }
+
+  @Override
+  public String toString() {
+    return "SurveyEntity{"
+        + "id="
+        + id
+        + ", name='"
+        + name
+        + '\''
+        + ", sets="
+        + sets
+        + ", createdAt="
+        + createdAt
+        + ", updatedAt="
+        + updatedAt
+        + ", openedOn="
+        + openedOn
+        + ", closedOn="
+        + closedOn
+        + ", teams="
+        + teams
+        + '}';
   }
 }

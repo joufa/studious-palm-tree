@@ -35,12 +35,13 @@ public interface TeamService {
     Team deleteTeam(Team team) throws AgileException;
 
     /**
-     * Finds an existing team
+     * Finds an existing team by name
      *
      * @param team
      * @return
      */
     Optional<Team> findTeamByName(String team);
+
 
     /**
      * Finds all teams
