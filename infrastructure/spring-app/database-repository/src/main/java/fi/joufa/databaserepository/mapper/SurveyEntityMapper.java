@@ -114,13 +114,13 @@ public class SurveyEntityMapper {
     if (teams == null || teams.isEmpty()) {
       return Collections.emptySet();
     }
-    return teams.stream().map(team -> team.getId()).collect(Collectors.toSet());
+    return teams.stream().map(TeamId::getId).collect(Collectors.toSet());
   }
 
   private Set<TeamId> mapLong(Set<Long> teams) {
     if (teams == null || teams.isEmpty()) {
       return Collections.emptySet();
     }
-    return teams.stream().map(id -> new TeamId(id)).collect(Collectors.toSet());
+    return teams.stream().map(TeamId::new).collect(Collectors.toSet());
   }
 }

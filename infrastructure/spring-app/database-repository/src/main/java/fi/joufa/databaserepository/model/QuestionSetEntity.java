@@ -1,6 +1,7 @@
 package fi.joufa.databaserepository.model;
 
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.*;
 
 @Entity
@@ -67,5 +68,22 @@ public class QuestionSetEntity implements Comparable<QuestionSetEntity> {
       return -1;
     }
     return 0;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    QuestionSetEntity that = (QuestionSetEntity) o;
+    return Objects.equals(id, that.id) &&
+            Objects.equals(name, that.name) &&
+            Objects.equals(ordering, that.ordering) &&
+            Objects.equals(questions, that.questions) &&
+            Objects.equals(survey, that.survey);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, ordering, questions, survey);
   }
 }

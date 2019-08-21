@@ -34,12 +34,6 @@ public class SurveyServiceImplTest {
   }
 
   @Test
-  public void findAllOpen() {}
-
-  @Test
-  public void isOpen() {}
-
-  @Test
   public void update() throws AgileException {
 
     final Survey survey = surveyService.findOne(new SurveyId(Long.valueOf(1))).get();
@@ -79,11 +73,6 @@ public class SurveyServiceImplTest {
     assertEquals(teams, updated.getTeams());
   }
 
-  @Test
-  public void createFrom() {}
-
-  @Test
-  public void findOne() {}
 
   private QuestionMap<QuestionSet> createQm() {
     final QuestionMap<Question> questions =
