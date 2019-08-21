@@ -1,5 +1,6 @@
 package fi.joufa.restservices.controller;
 
+import fi.joufa.agileservices.exceptions.AgileException;
 import fi.joufa.agileservices.services.SurveyService;
 import fi.joufa.domain.model.SurveyUpdate;
 import java.util.List;
@@ -25,12 +26,12 @@ public class SurveyController {
   }
 
   @PostMapping(path = "/surveys")
-  public SurveyDto create(@RequestBody SurveyDto surveyDto) throws Exception {
+  public SurveyDto create(@RequestBody SurveyDto surveyDto) throws AgileException {
     return dtoMapper.toDto(this.surveyService.create(surveyDto.getName()));
   }
 
   @PutMapping(path = "/surveys")
-  public SurveyDto update(@RequestBody SurveyDto surveyDto) throws Exception {
+  public SurveyDto update(@RequestBody SurveyDto surveyDto) throws AgileException {
     final SurveyUpdate toUpdate = dtoMapper.toUpdate(surveyDto);
     return dtoMapper.toDto(this.surveyService.update(toUpdate));
   }

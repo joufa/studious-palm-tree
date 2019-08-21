@@ -1,6 +1,7 @@
 package fi.joufa.databaserepository.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import fi.joufa.databaserepository.config.DatabaseConfiguration;
 import fi.joufa.databaserepository.mapper.SurveyEntityMapper;
@@ -43,7 +44,8 @@ public class SurveyEntityRepositoryTest {
   @Test
   public void createWithName() {
     final Survey survey = SurveyFactory.createNew("Test survey");
-    surveyEntityRepository.saveAndFlush(sem.surveyToEntity(survey));
+    final SurveyEntity result = surveyEntityRepository.saveAndFlush(sem.surveyToEntity(survey));
+    assertEquals("Test survey", result.getName());
   }
 
   @Test
@@ -60,11 +62,8 @@ public class SurveyEntityRepositoryTest {
     survey.open();
     survey.close();
     final SurveyEntity se = sem.surveyToEntity(survey);
-    surveyEntityRepository.save(se);
-    /**
-     * final Survey constructed =
-     * sem.entityToSurvey(surveyEntityRepository.findById(Long.valueOf(2)).get());
-     * assertThat(constructed).isNotNull();
-     */
+    final SurveyEntity result = surveyEntityRepository.save(se);
+
+    assertThat(result).isNotNull();
   }
 }

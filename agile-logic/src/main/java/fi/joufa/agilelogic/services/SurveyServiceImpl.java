@@ -83,7 +83,7 @@ public class SurveyServiceImpl implements SurveyService {
   public Survey update(SurveyUpdate surveyUpdate) throws AgileException {
     Set teamsUpdate = null;
     Survey survey = surveyRepository.findById(surveyUpdate.getId());
-    System.out.print(survey);
+
     if (survey == null) {
       throw new AgileException("Cannot find survey for update");
     }

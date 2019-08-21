@@ -51,7 +51,7 @@ public class DtoMapper {
     Set<Long> teams = new HashSet<>();
 
     if (survey.getTeams() != null || !survey.getTeams().isEmpty()) {
-      teams = survey.getTeams().stream().map(id -> id.getId()).collect(Collectors.toSet());
+      teams = survey.getTeams().stream().map(TeamId::getId).collect(Collectors.toSet());
     }
 
     dto.setTeams(teams);
@@ -63,15 +63,14 @@ public class DtoMapper {
     return new SurveyBuilder()
         .setSurveyId(dto.getId())
         .setName(dto.getName())
-        .setAllTeams(dto.getTeams().stream().map(id -> new TeamId(id)).collect(Collectors.toSet()))
+        .setAllTeams(dto.getTeams().stream().map(TeamId::new).collect(Collectors.toSet()))
         .createSurvey();
   }
 
   public SurveyUpdate toUpdate(SurveyDto surveyDto) {
     final SurveyUpdate update = new SurveyUpdate(new SurveyId(surveyDto.getId()));
     if (surveyDto.getTeams() != null) {
-      update.setTeams(
-          surveyDto.getTeams().stream().map(team -> new TeamId(team)).collect(Collectors.toSet()));
+      update.setTeams(surveyDto.getTeams().stream().map(TeamId::new).collect(Collectors.toSet()));
     }
     return update;
   }

@@ -72,7 +72,6 @@ public class SurveyEntityMapper {
   }
 
   public Survey entityToSurvey(SurveyEntity se) {
-    System.out.print("Entity to survey...");
     QuestionMap<QuestionSet> questMap;
     questMap = null;
     // Has questions

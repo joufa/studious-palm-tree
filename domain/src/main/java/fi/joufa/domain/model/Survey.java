@@ -43,7 +43,9 @@ public class Survey {
      */
     public boolean isOpen() {
 
-        return this.status.isOpen() && this.surveyHistory.getHistory() == null && this.surveyHistory.getHistory().size() < 1;
+        return this.status.isOpen()
+                && this.surveyHistory.getHistory() == null
+                && this.surveyHistory.getHistory().isEmpty();
     }
 
 
