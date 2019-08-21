@@ -68,7 +68,7 @@ public class DtoMapper {
   }
 
   public SurveyUpdate toUpdate(SurveyDto surveyDto) {
-    final SurveyUpdate update = new SurveyUpdate(new SurveyId(Long.valueOf(surveyDto.getId())));
+    final SurveyUpdate update = new SurveyUpdate(new SurveyId(surveyDto.getId()));
     if (surveyDto.getTeams() != null) {
       update.setTeams(
           surveyDto.getTeams().stream().map(team -> new TeamId(team)).collect(Collectors.toSet()));

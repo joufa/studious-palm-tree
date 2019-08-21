@@ -103,7 +103,7 @@ public class SurveyServiceImpl implements SurveyService {
         new SurveyBuilder()
             .setName(survey.getName())
             .setAllTeams(teamsUpdate)
-            .setSurveyId(Long.valueOf(survey.getSurveyId().get()))
+            .setSurveyId(survey.getSurveyId().get())
             .setStatus(survey.getStatus())
             .setHistory(survey.getSurveyHistory())
             .setQuestionSets(survey.getQuestionSets())
