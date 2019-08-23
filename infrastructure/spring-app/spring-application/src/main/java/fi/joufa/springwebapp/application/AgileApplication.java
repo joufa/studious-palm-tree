@@ -8,6 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AgileApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(AgileApplication.class);
+    SpringApplication.run(AgileApplication.class, args);
   }
 }

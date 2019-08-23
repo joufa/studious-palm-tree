@@ -75,11 +75,11 @@ public class QuestionSetEntity implements Comparable<QuestionSetEntity> {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     QuestionSetEntity that = (QuestionSetEntity) o;
-    return Objects.equals(id, that.id) &&
-            Objects.equals(name, that.name) &&
-            Objects.equals(ordering, that.ordering) &&
-            Objects.equals(questions, that.questions) &&
-            Objects.equals(survey, that.survey);
+    return Objects.equals(id, that.id)
+        && Objects.equals(name, that.name)
+        && Objects.equals(ordering, that.ordering)
+        && Objects.equals(questions, that.questions)
+        && Objects.equals(survey, that.survey);
   }
 
   @Override

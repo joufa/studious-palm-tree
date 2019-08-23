@@ -123,6 +123,10 @@ public class SurveyServiceImpl implements SurveyService {
     return Optional.of(this.surveyRepository.findById(surveyId));
   }
 
+  /*
+    Business rules:
+    - Teams must exist
+  */
   private Set<TeamId> fixTeamsForUpdate(Set<TeamId> oldTeams, Set<TeamId> newTeams) {
     if (newTeams == null) {
       return oldTeams == null ? Collections.emptySet() : oldTeams;
@@ -134,6 +138,6 @@ public class SurveyServiceImpl implements SurveyService {
 
     oldTeams.addAll(newTeams);
 
-    return oldTeams;
+    return newTeams;
   }
 }
