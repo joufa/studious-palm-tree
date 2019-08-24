@@ -73,7 +73,6 @@ public class SurveyServiceImplTest {
     assertEquals(teams, updated.getTeams());
   }
 
-
   private QuestionMap<QuestionSet> createQm() {
     final QuestionMap<Question> questions =
         QuestionMap.createQuestionMap(Arrays.asList(new Question("Eka"), new Question("Toka")));
