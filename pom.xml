@@ -36,6 +36,12 @@
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
                         <version>${jacoco.version}</version>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/*Entity.java</exclude>
+                                <exclude>**/*Dto.java</exclude>
+                            </excludes>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>agent-for-ut</id>
@@ -45,6 +51,7 @@
                                 <configuration>
                                     <append>true</append>
                                     <destFile>${sonar.jacoco.reportPaths}</destFile>
+
                                 </configuration>
                             </execution>
                             <execution>
